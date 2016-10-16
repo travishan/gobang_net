@@ -62,6 +62,16 @@ using namespace std;
 			return name;\
 		}\
 
+#define SingletonBuilder(className)\
+public:\
+	static className* get(){\
+		static className  *m = nullptr;\
+		if(m == nullptr){\
+			m = new className();\
+		}\
+		return m;\
+	}\
+
 enum CHESS_COLOR
 {
 	B = 0,

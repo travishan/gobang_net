@@ -8,11 +8,12 @@
 
 class RenderManager : Manager
 {
+	SingletonBuilder(RenderManager)
 public:
 	RenderManager() {
 
 	}
-	 ~RenderManager() {
+	~RenderManager() {
 
 	}
 	virtual void startUp();
@@ -20,6 +21,8 @@ public:
 
 
 	void rendEverything();
+
+	
 private:
 	shared_ptr<MyWindow> winRender;
 

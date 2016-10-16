@@ -7,7 +7,7 @@ void IOManager::startUp() {
 
 }
 void IOManager::shutDown() {
-
+	delete IOManager::get();
 }
 
 void IOManager::input(bool &quit) {

@@ -15,6 +15,7 @@ void RenderManager::startUp() {
 
 void RenderManager::shutDown() {
 	winRender->quit();
+	delete RenderManager::get();
 }
 
 void RenderManager::rendEverything() {

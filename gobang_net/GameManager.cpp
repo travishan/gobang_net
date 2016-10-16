@@ -10,8 +10,8 @@ GameManager
 
 
 void GameManager::before() {
-	renderMgr = new RenderManager();
-	ioMgr = new IOManager();
+	renderMgr = RenderManager::get();
+	ioMgr = IOManager::get();
 
 
 	renderMgr->startUp();
@@ -21,10 +21,7 @@ void GameManager::before() {
 void GameManager::after() {
 
 	renderMgr->shutDown();
-	delete renderMgr;
-
 	ioMgr->shutDown();
-	delete ioMgr;
 
 }
 void GameManager::run() {

@@ -8,6 +8,7 @@
 class IOManager : Manager
 {
 	PropertyBuilderByName(bool, quit, Quit)
+	SingletonBuilder(IOManager)
 public:
 	IOManager() {}
 	~IOManager() {}

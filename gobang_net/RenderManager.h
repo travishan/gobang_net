@@ -4,17 +4,20 @@
 
 #include "define.h"
 #include "MyWindow.h"
+#include "Manager.h"
 
-class RenderManager
+class RenderManager : Manager
 {
 public:
 	RenderManager();
-	~RenderManager() {
+	 ~RenderManager() {
 
 	}
+	virtual void startUp();
+	virtual void shutDown();
+
 
 	void rendEverything();
-
 private:
 	shared_ptr<MyWindow> winRender;
 

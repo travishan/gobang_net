@@ -16,8 +16,15 @@ public:
 
 	void run();
 private:
+	void before();
+	void after();
+private:
 	GameState gameState;
 	bool quit;
+
+
+private://Mgr
+	RenderManager *renderMgr;
 };
 
 

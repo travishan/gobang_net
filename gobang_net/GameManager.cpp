@@ -1,32 +1,36 @@
 #include "GameManager.h"
 
 
-void GameManager::run() {
-
-}
-
-void GameManager::init() {
-}
-
-void GameManager::startUp() {
-
-}
-void GameManager::shutDown() {
-
-}
-void GameManager::release() {
-
-}
-
-
 /********************************
+
 GameManager
 
 ********************************/
 
-void GameManager::startUp() {
-	
+
+
+void GameManager::before() {
+	renderMgr = new RenderManager();
+
+
+
+
+	renderMgr->startUp();
 }
-void GameManager::shutDown() {
+
+void GameManager::after() {
+
+	renderMgr->shutDown();
+	delete renderMgr;
+
+}
+void GameManager::run() {
+	before();
+
+	while (!quit) {
+		renderMgr->rendEverything();
+	}
+
+	after();
 
 }

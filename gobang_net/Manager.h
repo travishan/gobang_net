@@ -2,7 +2,7 @@
 #ifndef __MANAGER__H__
 #define __MANAGER__H__
 
-
+#include"define.h"
 class Manager
 {
 public:

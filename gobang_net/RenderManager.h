@@ -9,7 +9,9 @@
 class RenderManager : Manager
 {
 public:
-	RenderManager();
+	RenderManager() {
+
+	}
 	 ~RenderManager() {
 
 	}

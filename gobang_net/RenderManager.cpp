@@ -2,9 +2,6 @@
 
 
 
-RenderManager::RenderManager(){}
-
-
 void RenderManager::startUp() {
 	winRender = make_shared<MyWindow>();
 	try {

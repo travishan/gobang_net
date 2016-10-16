@@ -51,6 +51,17 @@ using namespace std;
 #define TOP_BOUND 0
 #define BOTTOM_BOUND 518
 
+#define PropertyBuilderByName(type, name, name2)\
+	private:\
+		type name;\
+	public:\
+		inline void set##name2(type v){\
+			name = v;\
+		}\
+		inline type get##name2(){\
+			return name;\
+		}\
+
 enum CHESS_COLOR
 {
 	B = 0,

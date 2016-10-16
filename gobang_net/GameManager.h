@@ -3,8 +3,9 @@
 #define __GAMEMANAGER__H__
 
 
-#include"define.h"
+
 #include "RenderManager.h"
+#include "IOManager.h"
 
 /********************************
 ÓÎÏ·Èë¿Ú
@@ -25,6 +26,8 @@ private:
 
 private://Mgr
 	RenderManager *renderMgr;
+	IOManager *ioMgr;
+
 };
 
 

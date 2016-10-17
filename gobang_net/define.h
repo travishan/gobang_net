@@ -16,7 +16,7 @@
 #include <Windows.h>
 #include <vector>
 #include <time.h>
-
+#include <functional>
 
 
 using namespace std;

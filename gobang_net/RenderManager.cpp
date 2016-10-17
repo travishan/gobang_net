@@ -11,6 +11,7 @@ void RenderManager::startUp() {
 		winMgr->quit();
 		return;
 	}
+	btnMgr = ButtonManager::get();
 }
 
 void RenderManager::shutDown() {
@@ -20,6 +21,10 @@ void RenderManager::shutDown() {
 
 void RenderManager::rendEverything() {
 	winMgr->clear();
+
+	btnMgr->render();
+
+
 
 	winMgr->present();
 }

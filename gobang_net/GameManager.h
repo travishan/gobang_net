@@ -7,6 +7,8 @@
 #include "RenderManager.h"
 #include "IOManager.h"
 #include "FrameManager.h"
+#include "ButtonManager.h"
+
 
 /********************************
 ÓÎÏ·Èë¿Ú
@@ -27,9 +29,11 @@ private:
 
 private://Mgr
 	WindowManager *winMgr;
+	ButtonManager *btnMgr;
 	RenderManager *renderMgr;
 	IOManager *ioMgr;
 	FrameManager *frameMgr;
+	
 };
 
 

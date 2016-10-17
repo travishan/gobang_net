@@ -5,12 +5,15 @@
 
 #include "Manager.h"
 
+
 class IOManager : Manager
 {
 	PropertyBuilderByName(bool, quit, Quit)
+	PropertyBuilderByName(bool, mouseLeftDown, MouseLeftDown)
+	PropertyBuilderByName(bool, mouseLeftUp, MouseLeftUp)
 	SingletonBuilder(IOManager)
 public:
-	IOManager() {}
+	IOManager() :quit(0), mouseLeftDown(false), mouseLeftUp(false){}
 	~IOManager() {}
 
 	virtual void startUp();
@@ -20,7 +23,7 @@ public:
 	
 private:
 	SDL_Event e;
-
+	
 };
 
 

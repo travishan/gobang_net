@@ -5,7 +5,7 @@
 
 #include "Manager.h"
 #include "WindowManager.h"
-
+#include "ButtonManager.h"
 
 class RenderManager : Manager
 {
@@ -26,6 +26,7 @@ public:
 	
 private:
 	WindowManager *winMgr;
+	ButtonManager *btnMgr;
 
 
 };

@@ -2,9 +2,10 @@
 #ifndef __RENDERMANAGER__H__
 #define __RENDERMANAGER__H__
 
-#include "define.h"
-#include "MyWindow.h"
+
 #include "Manager.h"
+#include "WindowManager.h"
+
 
 class RenderManager : Manager
 {
@@ -24,7 +25,7 @@ public:
 
 	
 private:
-	shared_ptr<MyWindow> winRender;
+	WindowManager *winMgr;
 
 
 };

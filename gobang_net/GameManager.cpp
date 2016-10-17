@@ -10,18 +10,25 @@ GameManager
 
 
 void GameManager::before() {
+	winMgr = WindowManager::get();
 	renderMgr = RenderManager::get();
 	ioMgr = IOManager::get();
+	frameMgr = FrameManager::get();
 
-
+	winMgr->startUp();
 	renderMgr->startUp();
 	ioMgr->startUp();
+	frameMgr->startUp();
 }
 
 void GameManager::after() {
 
-	renderMgr->shutDown();
+
+	frameMgr->shutDown();
 	ioMgr->shutDown();
+	renderMgr->shutDown();
+	winMgr->shutDown();
+	
 
 }
 void GameManager::run() {
@@ -30,6 +37,7 @@ void GameManager::run() {
 	while (!quit) {
 
 		ioMgr->input(quit);
+		frameMgr->frame();
 		renderMgr->rendEverything();
 	}
 

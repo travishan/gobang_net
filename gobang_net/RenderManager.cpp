@@ -3,23 +3,23 @@
 
 
 void RenderManager::startUp() {
-	winRender = make_shared<MyWindow>();
+	winMgr = WindowManager::get();
 	try {
-		winRender->init("gobang");
+		winMgr->init("gobang");
 	} catch (const runtime_error &e) {
 		cout << e.what() << endl;
-		winRender->quit();
+		winMgr->quit();
 		return;
 	}
 }
 
 void RenderManager::shutDown() {
-	winRender->quit();
+	winMgr->quit();
 	delete RenderManager::get();
 }
 
 void RenderManager::rendEverything() {
-	winRender->clear();
+	winMgr->clear();
 
-	winRender->present();
+	winMgr->present();
 }

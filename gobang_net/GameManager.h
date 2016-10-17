@@ -3,9 +3,10 @@
 #define __GAMEMANAGER__H__
 
 
-
+#include "WindowManager.h"
 #include "RenderManager.h"
 #include "IOManager.h"
+#include "FrameManager.h"
 
 /********************************
 ÓÎÏ·Èë¿Ú
@@ -25,9 +26,10 @@ private:
 
 
 private://Mgr
+	WindowManager *winMgr;
 	RenderManager *renderMgr;
 	IOManager *ioMgr;
-
+	FrameManager *frameMgr;
 };
 
 

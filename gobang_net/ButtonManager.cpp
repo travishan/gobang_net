@@ -110,6 +110,8 @@ void ButtonManager::checkClick(bool mouseLeftDown,bool mouseLeftUp) {
 					b->callBackFun();
 				}
 			}
+		} else if (b->getSelected() && mouseLeftUp) {
+			b->setSelected(!mouseLeftUp);
 		}
 	}
 }

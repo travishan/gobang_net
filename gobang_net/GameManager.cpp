@@ -44,7 +44,7 @@ void GameManager::run() {
 
 		ioMgr->input(quit);
 		frameMgr->frame();
-		renderMgr->rendEverything();
+		renderMgr->rendEverything(gameState);
 	}
 
 	after();

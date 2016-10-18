@@ -24,7 +24,7 @@ public:
 	}
 
 	//添加回调函数
-	void addCallback(function<void()> f);
+	void setCallback(function<void()> f);
 	//设置位置
 	void setPosition(int x, int y);
 	//渲染按钮
@@ -32,7 +32,7 @@ public:
 	//检查鼠标是否在按钮中
 	bool hit(int mX, int mY);
 	//调用回调函数
-	void callBackFun();
+	void runCallBack();
 	//设置title
 	void setTitle(string str, SDL_Color color, int size);
 	

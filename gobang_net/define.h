@@ -33,6 +33,13 @@ using namespace std;
 #define WHITE_FILE "./res/white.png"
 #define BLACK_FILE "./res/black.png"
 
+#define BEGINSCENE_FILE "./res/beginScene.jpg"
+#define BUTTON_NORMAL_FILE "./res/btn.png"
+#define BUTTON_SELECTED_FILE "./res/btn1.png"
+#define BUTTON_DISABLE_FILE "./res/btn2.png"
+
+
+#define CALLBACK_0(__func__, __target__) bind(&__func__, __target__)
 
 //ฑ฿ิต 22   490
 

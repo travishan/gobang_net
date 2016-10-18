@@ -25,7 +25,7 @@ void Button::init(const string &normalImage, const string &selectedImage, const 
 }
 
 //添加回调函数
-void Button::addCallback(function<void()> f) {
+void Button::setCallback(function<void()> f) {
 	callBack = f;
 }
 
@@ -55,7 +55,7 @@ bool Button::hit(int mX, int mY) {
 	return false;
 }
 
-void Button::callBackFun() {
+void Button::runCallBack() {
 	callBack();
 }
 
@@ -122,7 +122,7 @@ void ButtonManager::checkClick(bool mouseLeftDown,bool mouseLeftUp) {
 			} else {
 				if (mouseLeftUp) {
 					b->setSelected(!mouseLeftUp);
-					b->callBackFun();
+					b->runCallBack();
 				}
 			}
 		} else if (b->getSelected() && mouseLeftUp) {

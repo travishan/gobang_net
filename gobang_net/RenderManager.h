@@ -6,6 +6,7 @@
 #include "Manager.h"
 #include "WindowManager.h"
 #include "ButtonManager.h"
+#include "BeginScene.h"
 
 class RenderManager : Manager
 {
@@ -21,7 +22,7 @@ public:
 	virtual void shutDown();
 
 
-	void rendEverything();
+	void rendEverything(const GameState &state);
 
 	
 private:

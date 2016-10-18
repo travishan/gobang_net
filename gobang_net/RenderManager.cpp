@@ -19,10 +19,15 @@ void RenderManager::shutDown() {
 	delete RenderManager::get();
 }
 
-void RenderManager::rendEverything() {
+void RenderManager::rendEverything(const GameState &state){
 	winMgr->clear();
 
-	btnMgr->render();
+	if (state == Select) {
+		auto scene = BeginScene::get();
+		scene->render();
+		btnMgr->render();
+	}
+	
 
 
 

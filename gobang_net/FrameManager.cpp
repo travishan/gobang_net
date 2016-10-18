@@ -7,25 +7,12 @@ void FrameManager::startUp() {
 	btnMgr = ButtonManager::get();
 	IOMgr = IOManager::get();
 
-	board = new Board();
-
-	start = Button::create("./res/btn.png", "./res/btn1.png", "./res/btn2\png");
-	start->setPosition(100, 200);
-	start->addCallback(bind(&FrameManager::startCallback, this));
-	start->setTitle("start", SDL_Color{ 0, 0, 0 },24);
-	btnMgr->addButton(start);
-
-	end = Button::create("./res/btn.png", "./res/btn1.png", "./res/btn2\png");
-	end->setPosition(200, 300);
-	end->addCallback(bind(&FrameManager::endCallback, this));
-	end->setTitle("end", SDL_Color{ 0,0,0 }, 24);
-	btnMgr->addButton(end);
+	bgnScene = BeginScene::get();
+	bgnScene->startUp();
 
 }
 
 void FrameManager::shutDown() {
-	delete board;
-
 
 	delete FrameManager::get();
 }
@@ -35,11 +22,4 @@ void FrameManager::frame() {
 	
 }
 
-void FrameManager::startCallback() {
-	cout << "start!!!!!!!!!" << endl;
-}
-
-void FrameManager::endCallback() {
-	cout << "end!!!!!!!!!" << endl;
-}
 

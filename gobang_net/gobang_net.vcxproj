@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BeginScene.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="define.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BeginScene.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="FileManager.cpp" />

@@ -6,6 +6,7 @@
 #include "Board.h"
 #include "ButtonManager.h"
 #include "IOManager.h"
+#include "BeginScene.h"
 
 class FrameManager : public Manager
 {
@@ -21,16 +22,11 @@ public:
 	virtual void shutDown();
 
 	void frame();
-
-	void startCallback();
-	void endCallback();
 private:
 	ButtonManager *btnMgr;
 	IOManager *IOMgr;
 
-	Board *board;
-	Button *start;
-	Button *end;
+	BeginScene *bgnScene;
 
 };
 

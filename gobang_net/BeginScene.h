@@ -6,6 +6,7 @@
 #include "define.h"
 #include "ButtonManager.h"
 #include "WindowManager.h"
+#include "GameManager.h"
 
 
 class BeginScene : Manager

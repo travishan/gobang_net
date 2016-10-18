@@ -136,6 +136,7 @@
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="FrameManager.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>

@@ -9,14 +9,16 @@ void FrameManager::startUp() {
 
 	board = new Board();
 
-	start = Button::create("./res/btn.png", "./res/btn1.png", "./res/btn2.png");
+	start = Button::create("./res/btn.png", "./res/btn1.png", "./res/btn2\png");
 	start->setPosition(100, 200);
 	start->addCallback(bind(&FrameManager::startCallback, this));
+	start->setTitle("start", SDL_Color{ 0, 0, 0 },24);
 	btnMgr->addButton(start);
 
-	end = Button::create("./res/btn.png", "./res/btn1.png", "./res/btn2.png");
+	end = Button::create("./res/btn.png", "./res/btn1.png", "./res/btn2\png");
 	end->setPosition(200, 300);
 	end->addCallback(bind(&FrameManager::endCallback, this));
+	end->setTitle("end", SDL_Color{ 0,0,0 }, 24);
 	btnMgr->addButton(end);
 
 }

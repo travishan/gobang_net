@@ -9,8 +9,11 @@
 class Button
 {
 	PropertyBuilderByName(bool, selected, Selected)
+	PropertyBuilderByName(bool, disable, Disable)
 public:
-	Button() : x(0),y(0), w(0), h(0), selected(false),disable(false) {}
+	Button() : selected(false), disable(false), title(""), x(0),y(0), w(0), h(0),
+		normalTex(nullptr),selectedTex(nullptr),disableTex(nullptr),titleTex(nullptr)
+	{}
 	virtual ~Button() {}
 
 	//创建一个按钮
@@ -22,7 +25,6 @@ public:
 
 	//添加回调函数
 	void addCallback(function<void()> f);
-
 	//设置位置
 	void setPosition(int x, int y);
 	//渲染按钮
@@ -31,15 +33,17 @@ public:
 	bool hit(int mX, int mY);
 	//调用回调函数
 	void callBackFun();
+	//设置title
+	void setTitle(string str, SDL_Color color, int size);
 	
 protected:
 	void init(const string &normalImage, const string &selectedImage, const string &disableImage);
 	
 
 protected:
-	int x, y, w, h;
-	bool disable;
-	SDL_Texture *normalTex, *selectedTex, *disableTex;
+	string title;
+	int x, y, w, h, tw, th;
+	SDL_Texture *normalTex, *selectedTex, *disableTex, *titleTex;
 	function<void()> callBack;
 };
 

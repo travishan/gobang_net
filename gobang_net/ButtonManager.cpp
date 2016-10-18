@@ -45,6 +45,7 @@ void Button::render() {
 	} else {
 		renderer->draw(x, y, normalTex);
 	}
+	renderer->draw(x + (w - tw) / 2, y + (h - th) / 2, titleTex);
 }
 
 bool Button::hit(int mX, int mY) {
@@ -58,6 +59,20 @@ void Button::callBackFun() {
 	callBack();
 }
 
+void Button::setTitle(string str, SDL_Color color,int size) {
+	auto winMgr = WindowManager::get();
+
+	title = str;
+	try {
+		auto tex = winMgr->renderText(str, TTF_FILE, color, size);
+		SDL_DestroyTexture(titleTex);
+		titleTex = tex;
+		SDL_QueryTexture(titleTex, nullptr, nullptr, &tw, &th);
+	} catch (const runtime_error &e) {
+		cout << e.what() << endl;
+	}
+	
+}
 
 
 

@@ -26,7 +26,7 @@ using namespace std;
 #define WIN_HEIGHT 535
 
 
-#define TTF_FILE "./res/arial.ttf"
+#define TTF_FILE "./res/Deng.ttf"
 #define TTF_FILE2 "./res/simsun.ttc"
 
 #define BOARD_FILE "./res/qipan.jpg"
@@ -128,6 +128,6 @@ void fillMatrix(CHESS_COLOR(&a)[15][15], int n) {
 	memset(a, n, sizeof(a));
 }
 
-
+char* localeToUTF8(const char *src);
 
 #endif // !__DEFINE__H__

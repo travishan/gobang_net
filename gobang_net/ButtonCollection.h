@@ -34,7 +34,7 @@ public:
 	//调用回调函数
 	void runCallBack();
 	//设置title
-	void setTitle(string str, SDL_Color color, int size);
+	void setTitle(const string &str, const SDL_Color &color, int size);
 	
 protected:
 	void init(const string &normalImage, const string &selectedImage, const string &disableImage);

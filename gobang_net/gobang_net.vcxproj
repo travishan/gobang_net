@@ -28,7 +28,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -133,7 +133,6 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IOManager.h" />
     <ClInclude Include="Manager.h" />
-    <ClInclude Include="MyWindow.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="FrameManager.h" />
     <ClInclude Include="SceneManager.h" />
@@ -144,11 +143,11 @@
     <ClCompile Include="BeginScene.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="ButtonCollection.cpp" />
+    <ClCompile Include="define.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="IOManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="FrameManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />

@@ -89,6 +89,8 @@ SDL_Texture* WindowManager::loadImage(string file) {
 	return tex;
 }
 
+extern char* localeToUTF8(char *src);
+
 SDL_Texture* WindowManager::renderText(string message, string fontFile, SDL_Color color, int fontSize) {
 	//Open the font
 	TTF_Font *font = nullptr;
@@ -99,7 +101,9 @@ SDL_Texture* WindowManager::renderText(string message, string fontFile, SDL_Colo
 
 	//Render the message to an SDL_Surface, as that's what TTF_RenderText_X returns
 	//SDL_Surface *surf = TTF_RenderUNICODE_Solid(font, cstringToUnicode(message.c_str()), color);
-	SDL_Surface *surf = TTF_RenderUTF8_Blended(font, message.c_str(), color);
+	//SDL_Surface *surf = TTF_RenderUTF8_Blended(font, message.c_str(), color);
+	SDL_Surface *surf = TTF_RenderUTF8_Blended(font, localeToUTF8(message.c_str()), color);
+
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer.get(), surf);
 	//Clean up unneeded stuff
 	SDL_FreeSurface(surf);

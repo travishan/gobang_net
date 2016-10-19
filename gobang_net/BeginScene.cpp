@@ -11,7 +11,6 @@ void BeginScene::init() {
 		cout << e.what() << endl;
 		return;
 	}
-
 	initButton();
 }
 
@@ -20,13 +19,13 @@ void BeginScene::initButton() {
 
 	singleBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
 	singleBtn->setPosition(210, 380);
-	singleBtn->setTitle("P vs C", SDL_Color{ 0,0,0 },24);
+	singleBtn->setTitle("人机对战", SDL_Color{ 0, 0, 0 },20);
 	singleBtn->setCallback(CALLBACK_0(BeginScene::singleMode, this));
 	this->addButton(singleBtn);
 
 	netBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
 	netBtn->setPosition(210, 440);
-	netBtn->setTitle("P vs P", SDL_Color{ 0,0,0 }, 24);
+	netBtn->setTitle("联网对战", SDL_Color{ 0,0,0 }, 20);
 	netBtn->setCallback(CALLBACK_0(BeginScene::netMode, this));
 	this->addButton(netBtn);
 }
@@ -41,7 +40,6 @@ void BeginScene::render() {
 	auto renderer = WindowManager::get();
 
 	renderer->draw(picture, SDL_Rect{ 0,0,WIN_WIDTH ,WIN_HEIGHT });
-
 	btnCollection->render();
 }
 

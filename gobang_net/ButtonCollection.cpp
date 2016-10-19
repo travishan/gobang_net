@@ -51,6 +51,7 @@ void Button::render() {
 		renderer->draw(x, y, normalTex);
 	}
 	renderer->draw(x + (w - tw) / 2, y + (h - th) / 2, titleTex);
+	//renderer->draw(x, y, titleTex);
 }
 
 bool Button::hit(int mX, int mY) {
@@ -64,7 +65,7 @@ void Button::runCallBack() {
 	callBack();
 }
 
-void Button::setTitle(string str, SDL_Color color,int size) {
+void Button::setTitle(const string &str, const SDL_Color &color,int size) {
 	auto winMgr = WindowManager::get();
 
 	title = str;

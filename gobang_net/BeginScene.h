@@ -18,6 +18,7 @@ public:
 	~BeginScene() {
 		Scene::~Scene();
 		SDL_DestroyTexture(picture);
+		
 	}
 
 	virtual void logic();

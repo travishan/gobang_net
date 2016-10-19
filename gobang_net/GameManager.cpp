@@ -11,17 +11,17 @@ GameManager
 
 void GameManager::before() {
 	winMgr = WindowManager::get();
-	btnMgr = ButtonManager::get();
 	renderMgr = RenderManager::get();
 	ioMgr = IOManager::get();
+	sceneMgr = SceneManager::get();
 	frameMgr = FrameManager::get();
 	
 
 
 	winMgr->startUp();
-	btnMgr->startUp();
 	renderMgr->startUp();
 	ioMgr->startUp();
+	sceneMgr->startUp();
 	frameMgr->startUp();
 	
 }
@@ -29,8 +29,9 @@ void GameManager::before() {
 void GameManager::after() {
 
 
-	btnMgr->shutDown();
+	
 	frameMgr->shutDown();
+	sceneMgr->shutDown();
 	ioMgr->shutDown();
 	renderMgr->shutDown();
 	winMgr->shutDown();
@@ -40,6 +41,7 @@ void GameManager::after() {
 void GameManager::run() {
 	before();
 
+	sceneMgr->push(new BeginScene());
 	while (!quit) {
 
 		ioMgr->input(quit);

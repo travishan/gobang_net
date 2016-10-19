@@ -39,9 +39,6 @@
     <ClInclude Include="FrameManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="FileManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -52,6 +49,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="StateManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonCollection.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,9 +80,6 @@
     <ClCompile Include="FrameManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="FileManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -87,6 +87,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="BeginScene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonCollection.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

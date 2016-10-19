@@ -3,9 +3,6 @@
 #define __FRAMEMANAGER__H__
 
 #include "Manager.h"
-#include "Board.h"
-#include "ButtonManager.h"
-#include "IOManager.h"
 #include "BeginScene.h"
 
 class FrameManager : public Manager
@@ -23,10 +20,7 @@ public:
 
 	void frame();
 private:
-	ButtonManager *btnMgr;
-	IOManager *IOMgr;
 
-	BeginScene *bgnScene;
 
 };
 

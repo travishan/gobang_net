@@ -11,7 +11,6 @@ void RenderManager::startUp() {
 		winMgr->quit();
 		return;
 	}
-	btnMgr = ButtonManager::get();
 }
 
 void RenderManager::shutDown() {
@@ -22,12 +21,12 @@ void RenderManager::shutDown() {
 void RenderManager::rendEverything(const GameState &state){
 	winMgr->clear();
 
-	if (state == Select) {
-		auto scene = BeginScene::get();
-		scene->render();
-		btnMgr->render();
-	}
-	
+	//if (state == Select) {
+	//	
+	//}
+	auto sceneMgr = SceneManager::get();
+	auto scene = sceneMgr->front();
+	scene->render();
 
 
 

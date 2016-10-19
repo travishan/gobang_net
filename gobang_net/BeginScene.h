@@ -4,24 +4,22 @@
 
 
 #include "define.h"
-#include "ButtonManager.h"
 #include "WindowManager.h"
-#include "GameManager.h"
+#include "SceneManager.h"
 
 
-class BeginScene : Manager
+
+class BeginScene : public Scene
 {
-	SingletonBuilder(BeginScene)
 public:
-	BeginScene() :picture(nullptr),singleBtn(nullptr),netBtn(nullptr){}
+	BeginScene() :picture(nullptr),singleBtn(nullptr),netBtn(nullptr){
+		init();
+	}
 	~BeginScene() {}
 
-	
-	
-	void render();
+	virtual void logic();
+	virtual void render();
 
-	virtual void startUp();
-	virtual void shutDown();
 private:
 	SDL_Texture *picture;
 	Button *singleBtn, *netBtn;
@@ -33,22 +31,6 @@ private:
 	void initButton();
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

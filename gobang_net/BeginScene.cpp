@@ -1,13 +1,5 @@
 #include "BeginScene.h"
 
-void BeginScene::startUp() {
-	init();
-}
-
-void BeginScene::shutDown() {
-
-	delete BeginScene::get();
-}
 
 
 void BeginScene::init() {
@@ -25,25 +17,32 @@ void BeginScene::init() {
 
 
 void BeginScene::initButton() {
-	auto btnMgr = ButtonManager::get();
 
 	singleBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
 	singleBtn->setPosition(210, 380);
 	singleBtn->setTitle("P vs C", SDL_Color{ 0,0,0 },24);
 	singleBtn->setCallback(CALLBACK_0(BeginScene::singleMode, this));
-	btnMgr->addButton(singleBtn);
+	this->addButton(singleBtn);
 
 	netBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
 	netBtn->setPosition(210, 440);
 	netBtn->setTitle("P vs P", SDL_Color{ 0,0,0 }, 24);
 	netBtn->setCallback(CALLBACK_0(BeginScene::netMode, this));
-	btnMgr->addButton(netBtn);
+	this->addButton(netBtn);
 }
+
+
+void BeginScene::logic() {
+	checkButtonClick();
+}
+
 
 void BeginScene::render() {
 	auto renderer = WindowManager::get();
-	//renderer->draw(0, 0, picture);
+
 	renderer->draw(picture, SDL_Rect{ 0,0,WIN_WIDTH ,WIN_HEIGHT });
+
+	btnCollection->render();
 }
 
 void BeginScene::singleMode() {

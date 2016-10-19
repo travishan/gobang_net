@@ -2,9 +2,9 @@
 #ifndef __BUTTONMANAGER__H__
 #define __BUTTONMANAGER__H__
 
-#include "Manager.h"
-#include "WindowManager.h"
 
+#include "define.h"
+#include "WindowManager.h"
 
 class Button
 {
@@ -48,13 +48,16 @@ protected:
 };
 
 
-class ButtonManager : public Manager
+class ButtonCollection
 {
-	SingletonBuilder(ButtonManager)
 public:
-
-	virtual void startUp();
-	virtual void shutDown();
+	ButtonCollection() {}
+	~ButtonCollection(){
+		for (Button* btn : buttons) {
+			delete btn;
+		}
+		buttons.clear();
+	}
 
 
 	//添加按钮到按钮队列

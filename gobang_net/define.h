@@ -17,7 +17,7 @@
 #include <vector>
 #include <time.h>
 #include <functional>
-
+#include <stack>
 
 using namespace std;
 

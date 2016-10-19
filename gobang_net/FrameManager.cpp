@@ -4,11 +4,7 @@
 
 void FrameManager::startUp() {
 
-	btnMgr = ButtonManager::get();
-	IOMgr = IOManager::get();
 
-	bgnScene = BeginScene::get();
-	bgnScene->startUp();
 
 }
 
@@ -18,8 +14,9 @@ void FrameManager::shutDown() {
 }
 
 void FrameManager::frame() {
-	btnMgr->checkClick(IOMgr->getMouseLeftDown(),IOMgr->getMouseLeftUp());
-	
+	auto sceneMgr = SceneManager::get();
+	auto scene = sceneMgr->front();
+	scene->logic();
 }
 
 

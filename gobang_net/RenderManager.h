@@ -5,10 +5,9 @@
 
 #include "Manager.h"
 #include "WindowManager.h"
-#include "ButtonManager.h"
-#include "BeginScene.h"
+#include "SceneManager.h"
 
-class RenderManager : Manager
+class RenderManager : public Manager
 {
 	SingletonBuilder(RenderManager)
 public:
@@ -27,8 +26,6 @@ public:
 	
 private:
 	WindowManager *winMgr;
-	ButtonManager *btnMgr;
-
 
 };
 

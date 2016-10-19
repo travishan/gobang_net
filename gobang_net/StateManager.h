@@ -2,8 +2,9 @@
 #ifndef __STATEMANAGER__H__
 #define __STATEMANAGER__H__
 
+#include "Manager.h"
 
-class StateManager
+class StateManager : public Manager
 {
 
 

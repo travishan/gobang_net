@@ -127,7 +127,7 @@
   <ItemGroup>
     <ClInclude Include="BeginScene.h" />
     <ClInclude Include="Board.h" />
-    <ClInclude Include="ButtonManager.h" />
+    <ClInclude Include="ButtonCollection.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameManager.h" />
@@ -136,13 +136,14 @@
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="FrameManager.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeginScene.cpp" />
     <ClCompile Include="Board.cpp" />
-    <ClCompile Include="ButtonManager.cpp" />
+    <ClCompile Include="ButtonCollection.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="IOManager.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="FrameManager.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

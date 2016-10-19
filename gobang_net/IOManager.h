@@ -6,7 +6,7 @@
 #include "Manager.h"
 
 
-class IOManager : Manager
+class IOManager : public Manager
 {
 	PropertyBuilderByName(bool, quit, Quit)
 	PropertyBuilderByName(bool, mouseLeftDown, MouseLeftDown)

@@ -1,7 +1,12 @@
-#include "ButtonManager.h"
+#include "ButtonCollection.h"
 
 
 
+/********************************
+
+Button
+
+*********************************/
 
 void Button::init(const string &normalImage, const string &selectedImage, const string &disableImage) {
 	auto winMgr = WindowManager::get();
@@ -75,41 +80,28 @@ void Button::setTitle(string str, SDL_Color color,int size) {
 }
 
 
+/********************************
+
+ButtonCollection
+
+*********************************/
 
 
-
-
-void ButtonManager::startUp() {
-
-	//nothing to do for now
-
-}
-
-
-void ButtonManager::shutDown() {
-	for (Button* btn : buttons) {
-		delete btn;
-	}
-	buttons.clear();
-	delete get();
-}
-
-
-void ButtonManager::addButton(Button *button) {
+void ButtonCollection::addButton(Button *button) {
 	if (button == nullptr) {
 		return;
 	}
 	buttons.push_back(button);
 }
 
-void ButtonManager::render() {
+void ButtonCollection::render() {
 	for (Button *b : buttons) {
 		b->render();
 	}
 }
 
 
-void ButtonManager::checkClick(bool mouseLeftDown,bool mouseLeftUp) {
+void ButtonCollection::checkClick(bool mouseLeftDown,bool mouseLeftUp) {
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 
@@ -131,7 +123,7 @@ void ButtonManager::checkClick(bool mouseLeftDown,bool mouseLeftUp) {
 	}
 }
 
-void ButtonManager::setSelectedFalse() {
+void ButtonCollection::setSelectedFalse() {
 	for (Button *b : buttons) {
 		b->setSelected(false);
 	}

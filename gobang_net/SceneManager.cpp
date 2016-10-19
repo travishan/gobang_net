@@ -40,6 +40,6 @@ void SceneManager::push(Scene* scene) {
 }
 
 
-Scene* SceneManager::front() {
+Scene* SceneManager::getCurrentScene() {
 	return sceneStack.top();
 }

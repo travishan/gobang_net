@@ -15,7 +15,7 @@ void FrameManager::shutDown() {
 
 void FrameManager::frame() {
 	auto sceneMgr = SceneManager::get();
-	auto scene = sceneMgr->front();
+	auto scene = sceneMgr->getCurrentScene();
 	scene->logic();
 }
 

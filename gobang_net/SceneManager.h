@@ -35,7 +35,7 @@ public:
 	virtual void startUp();
 	virtual void shutDown();
 
-	Scene* front();
+	Scene* getCurrentScene();
 	void push(Scene* scene);
 private:
 	stack<Scene*> sceneStack;

@@ -25,7 +25,7 @@ void RenderManager::rendEverything(const GameState &state){
 	//	
 	//}
 	auto sceneMgr = SceneManager::get();
-	auto scene = sceneMgr->front();
+	auto scene = sceneMgr->getCurrentScene();
 	scene->render();
 
 

@@ -26,7 +26,7 @@ using namespace std;
 #define WIN_HEIGHT 535
 
 
-#define TTF_FILE "./res/Deng.ttf"
+#define TTF_FILE "./res/simsun.ttc"
 #define TTF_FILE2 "./res/simsun.ttc"
 
 #define BOARD_FILE "./res/qipan.jpg"

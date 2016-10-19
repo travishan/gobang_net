@@ -12,7 +12,9 @@ class Scene
 {
 public:
 	Scene() :btnCollection(new ButtonCollection) {}
-	virtual ~Scene() {}
+	virtual ~Scene() {
+		delete btnCollection;
+	}
 
 	virtual void logic() = 0;
 	virtual void render() = 0;
@@ -38,6 +40,7 @@ public:
 	Scene* getCurrentScene();
 	void push(Scene* scene);
 private:
+	//³¡¾°Õ»
 	stack<Scene*> sceneStack;
 };
 

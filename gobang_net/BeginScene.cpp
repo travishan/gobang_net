@@ -24,10 +24,16 @@ void BeginScene::initButton() {
 	this->addButton(singleBtn);
 
 	netBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
-	netBtn->setPosition(210, 440);
+	netBtn->setPosition(210, 420);
 	netBtn->setTitle("联网对战", SDL_Color{ 0,0,0 }, 20);
 	netBtn->setCallback(CALLBACK_0(BeginScene::netMode, this));
 	this->addButton(netBtn);
+
+	serverBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
+	serverBtn->setPosition(210, 460);
+	serverBtn->setTitle("创建房间", SDL_Color{ 0,0,0 }, 20);
+	serverBtn->setCallback(CALLBACK_0(BeginScene::createRoom, this));
+	this->addButton(serverBtn);
 }
 
 
@@ -50,11 +56,13 @@ void BeginScene::singleMode() {
 
 void BeginScene::netMode() {
 	cout << "netMode" << endl;
+
 	singleBtn->setDisabled(true);
 	netBtn->setDisabled(true);
+	serverBtn->setDisabled(true);
+
 	textInput = TextInput::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE);
 	textInput->setPosition(210, 440);
-	//textInput->setTitle("", SDL_Color{ 255,255,255 }, 24);
 	textInput->setCallback(CALLBACK_0(BeginScene::startText, this));
 	this->addButton(textInput);
 	auto ioMgr = IOManager::get();
@@ -73,4 +81,8 @@ void BeginScene::startText() {
 
 void BeginScene::connect() {
 	cout << "connect" << endl;
+}
+
+void BeginScene::createRoom() {
+	cout << "create" << endl;
 }

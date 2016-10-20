@@ -23,6 +23,10 @@ void GameManager::before() {
 	ioMgr->startUp();
 	sceneMgr->startUp();
 	frameMgr->startUp();
+
+
+
+	SDL_StopTextInput();
 	
 }
 

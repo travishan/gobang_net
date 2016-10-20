@@ -28,7 +28,7 @@ private:
 	//background图片
 	SDL_Texture *picture;
 	//两个按钮   单人模式和联机模式
-	Button *singleBtn, *netBtn;
+	Button *singleBtn, *netBtn, *serverBtn;
 	TextInput *textInput;
 	Button *conBtn;
 
@@ -47,6 +47,8 @@ private:
 	void singleMode();
 	//联机模式
 	void netMode();
+	//创建房间
+	void createRoom();
 	//textinput
 	void startText();
 	//connect

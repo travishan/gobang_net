@@ -102,7 +102,7 @@ void TextInput::render() {
 //检查鼠标是否在按钮中
 bool TextInput::hit(int mX, int mY) {
 	if (mX >= x && mX <= (x + w) && mY >= y && mY <= (y + h)) {
-		SDL_StartTextInput();
+		//SDL_StartTextInput();
 		//method 2   SDL_SetTextInputRect 
 		return true;
 	}

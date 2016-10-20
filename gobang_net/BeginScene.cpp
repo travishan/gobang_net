@@ -76,6 +76,8 @@ void BeginScene::netMode() {
 }
 
 void BeginScene::startText() {
+	//SDL_Rect rect{ 210,440,80,35 };
+	//SDL_SetTextInputRect(&rect);
 	SDL_StartTextInput();
 }
 

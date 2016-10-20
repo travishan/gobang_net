@@ -1,7 +1,6 @@
 #include "ButtonCollection.h"
 
 
-
 /********************************
 
 Button
@@ -23,7 +22,7 @@ void Button::init(const string &normalImage, const string &selectedImage, const 
 		cout << e.what() << endl;
 	}
 	try {
-		disableTex = winMgr->loadImage(disableImage);
+		disabledTex = winMgr->loadImage(disableImage);
 	} catch (const runtime_error &e) {
 		cout << e.what() << endl;
 	}
@@ -43,8 +42,8 @@ void Button::setPosition(int x, int y) {
 //渲染按钮
 void Button::render() {
 	auto renderer = WindowManager::get();
-	if (disable) {
-		renderer->draw(x, y, disableTex);
+	if (disabled) {
+		renderer->draw(x, y, disabledTex);
 	} else if (selected) {
 		renderer->draw(x, y, selectedTex);
 	} else {
@@ -80,6 +79,41 @@ void Button::setTitle(const string &str, const SDL_Color &color,int size) {
 	
 }
 
+/********************************
+
+TextInput
+
+*********************************/
+
+//渲染按钮
+void TextInput::render() {
+	
+	auto renderer = WindowManager::get();
+	if (disabled) {
+		renderer->draw(x, y, disabledTex);
+	} else if (selected) {
+		renderer->draw(x, y, selectedTex);
+	} else {
+		renderer->draw(x, y, normalTex);
+	}
+	renderer->draw(x, y + (h - th) / 2, titleTex);
+}
+
+//检查鼠标是否在按钮中
+bool TextInput::hit(int mX, int mY) {
+	if (mX >= x && mX <= (x + w) && mY >= y && mY <= (y + h)) {
+		SDL_StartTextInput();
+		//method 2   SDL_SetTextInputRect 
+		return true;
+	}
+	SDL_StopTextInput();
+	return false;
+}
+
+void TextInput::append(string s) {
+	title.append(s);
+	this->setTitle(title, SDL_Color{ 255,255,255 }, 16);
+}
 
 /********************************
 
@@ -97,7 +131,9 @@ void ButtonCollection::addButton(Button *button) {
 
 void ButtonCollection::render() {
 	for (Button *b : buttons) {
-		b->render();
+		if (!b->getDisabled()) {
+			b->render();
+		}
 	}
 }
 
@@ -106,20 +142,25 @@ void ButtonCollection::checkClick(bool mouseLeftDown,bool mouseLeftUp) {
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 
-	for (Button *b : buttons) {
-		if (b->hit(x, y)) {
-			if (!b->getSelected()) {
-				if (mouseLeftDown) {
-					b->setSelected(mouseLeftDown);
+	if (!mouseLeftDown && !mouseLeftUp) {
+		return;
+	}
+	for (int i = 0; i < buttons.size(); ++i) {
+		if (!buttons[i]->getDisabled()) {
+			if (mouseLeftDown) {
+				if (buttons[i]->hit(x, y) && !buttons[i]->getSelected()) {
+					buttons[i]->setSelected(true);
 				}
-			} else {
-				if (mouseLeftUp) {
-					b->setSelected(!mouseLeftUp);
-					b->runCallBack();
+			} else if (mouseLeftUp) {
+				if (buttons[i]->hit(x, y)) {
+					if (buttons[i]->getSelected()) {
+						buttons[i]->setSelected(false);
+						buttons[i]->runCallBack();
+					} else {
+						buttons[i]->setSelected(false);
+					}
 				}
 			}
-		} else if (b->getSelected() && mouseLeftUp) {
-			b->setSelected(!mouseLeftUp);
 		}
 	}
 }

@@ -37,7 +37,8 @@ using namespace std;
 #define BUTTON_NORMAL_FILE "./res/btn.png"
 #define BUTTON_SELECTED_FILE "./res/btn1.png"
 #define BUTTON_DISABLE_FILE "./res/btn2.png"
-
+#define NUM_NORMAL_FILE "./res/num1.png"
+#define NUM_SELECTED_FILE "./res/num2.png"
 
 #define CALLBACK_0(__func__, __target__) bind(&__func__, __target__)
 
@@ -58,8 +59,8 @@ using namespace std;
 #define TOP_BOUND 0
 #define BOTTOM_BOUND 518
 
-#define PropertyBuilderByName(type, name, name2)\
-	private:\
+#define PropertyBuilderByName(type, name, name2, domain)\
+	domain:\
 		type name;\
 	public:\
 		inline void set##name2(type v){\

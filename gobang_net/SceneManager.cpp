@@ -16,6 +16,7 @@ void Scene::addButton(Button *btn) {
 void Scene::checkButtonClick() {
 	auto ioMgr = IOManager::get();
 	btnCollection->checkClick(ioMgr->getMouseLeftDown(), ioMgr->getMouseLeftUp());
+	ioMgr->resetMouse();
 }
 
 /**************************

@@ -6,13 +6,13 @@
 #include "define.h"
 #include "WindowManager.h"
 #include "SceneManager.h"
-
+#include "IOManager.h"
 
 
 class BeginScene : public Scene
 {
 public:
-	BeginScene() :picture(nullptr),singleBtn(nullptr),netBtn(nullptr){
+	BeginScene() :picture(nullptr),singleBtn(nullptr),netBtn(nullptr), textInput(nullptr), conBtn(nullptr){
 		init();
 	}
 	~BeginScene() {
@@ -29,17 +29,28 @@ private:
 	SDL_Texture *picture;
 	//两个按钮   单人模式和联机模式
 	Button *singleBtn, *netBtn;
-
+	TextInput *textInput;
+	Button *conBtn;
 
 	//初始化
 	void init();
 	//初始化按钮
 	void initButton();
+
+
+
+	/**********************
+	CALLBACK
+	**********************/
+
 	//单机模式
 	void singleMode();
 	//联机模式
 	void netMode();
-
+	//textinput
+	void startText();
+	//connect
+	void connect();
 
 };
 

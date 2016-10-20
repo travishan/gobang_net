@@ -50,4 +50,27 @@ void BeginScene::singleMode() {
 
 void BeginScene::netMode() {
 	cout << "netMode" << endl;
+	singleBtn->setDisabled(true);
+	netBtn->setDisabled(true);
+	textInput = TextInput::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE);
+	textInput->setPosition(210, 440);
+	//textInput->setTitle("", SDL_Color{ 255,255,255 }, 24);
+	textInput->setCallback(CALLBACK_0(BeginScene::startText, this));
+	this->addButton(textInput);
+	auto ioMgr = IOManager::get();
+	ioMgr->setTextInput(textInput);
+
+	conBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
+	conBtn->setPosition(350, 440);
+	conBtn->setTitle("Á¬½Ó", SDL_Color{ 0,0,0 }, 20);
+	conBtn->setCallback(CALLBACK_0(BeginScene::connect, this));
+	this->addButton(conBtn);
+}
+
+void BeginScene::startText() {
+	SDL_StartTextInput();
+}
+
+void BeginScene::connect() {
+	cout << "connect" << endl;
 }

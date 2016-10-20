@@ -8,11 +8,11 @@
 
 class Button
 {
-	PropertyBuilderByName(bool, selected, Selected)
-	PropertyBuilderByName(bool, disable, Disable)
+	PropertyBuilderByName(bool, selected, Selected, protected)
+	PropertyBuilderByName(bool, disabled, Disabled, protected)
 public:
-	Button() : selected(false), disable(false), title(""), x(0),y(0), w(0), h(0),
-		normalTex(nullptr),selectedTex(nullptr),disableTex(nullptr),titleTex(nullptr)
+	Button() : selected(false), disabled(false), title(""), x(0),y(0), w(0), h(0),
+		normalTex(nullptr),selectedTex(nullptr),disabledTex(nullptr),titleTex(nullptr)
 	{}
 	virtual ~Button() {}
 
@@ -28,9 +28,9 @@ public:
 	//设置位置
 	void setPosition(int x, int y);
 	//渲染按钮
-	void render();
+	virtual void render();
 	//检查鼠标是否在按钮中
-	bool hit(int mX, int mY);
+	virtual bool hit(int mX, int mY);
 	//调用回调函数
 	void runCallBack();
 	//设置title
@@ -43,8 +43,30 @@ protected:
 protected:
 	string title;
 	int x, y, w, h, tw, th;
-	SDL_Texture *normalTex, *selectedTex, *disableTex, *titleTex;
+	SDL_Texture *normalTex, *selectedTex, *disabledTex, *titleTex;
 	function<void()> callBack;
+};
+
+class TextInput : public Button
+{
+public:
+	TextInput() {
+
+	}
+	~TextInput() {}
+	static TextInput* create(const string &normalImage, const string &selectedImage = "", const string &disableImage = "") {
+		TextInput* ti = new TextInput();
+		ti->init(normalImage, selectedImage, disableImage);
+		return ti;
+	}
+	//渲染按钮
+	void render();
+	//检查鼠标是否在按钮中
+	bool hit(int mX, int mY);
+	//添加字符
+	void append(string s);
+protected:
+
 };
 
 

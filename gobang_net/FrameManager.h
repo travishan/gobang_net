@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __FRAMEMANAGER__H__
 #define __FRAMEMANAGER__H__
 

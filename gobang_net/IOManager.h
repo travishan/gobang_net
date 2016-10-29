@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __IOMANAGER__H__
 #define __IOMANAGER__H__
 

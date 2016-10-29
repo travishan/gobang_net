@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __MANAGER__H__
 #define __MANAGER__H__
 

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __BEGINSCENE__H__
 #define __BEGINSCENE__H__
 
@@ -12,7 +11,7 @@
 class BeginScene : public Scene
 {
 public:
-	BeginScene() :picture(nullptr),singleBtn(nullptr),netBtn(nullptr), textInput(nullptr), conBtn(nullptr){
+	BeginScene() :picture(nullptr),singleBtn(nullptr),netBtn(nullptr){
 		init();
 	}
 	~BeginScene() {
@@ -25,38 +24,41 @@ public:
 	virtual void render();
 
 private:
-	//background图片
+	/*
+	background图片
+	*/
 	SDL_Texture *picture;
-	//两个按钮   单人模式和联机模式
-	Button *singleBtn, *netBtn, *serverBtn;
-	TextInput *textInput;
-	Button *conBtn;
 
-	//初始化
+	/*
+	两个按钮   单人模式和联机模式
+	*/
+	Button *singleBtn, *netBtn;
+
+	/*
+	初始化
+	*/
 	void init();
-	//初始化按钮
+
+	/*
+	初始化按钮
+	*/
 	void initButton();
 
 
 
 	/**********************
-	CALLBACK
+	回调函数
 	**********************/
-
-	//单机模式
+	/*
+	单机模式
+	*/
 	void singleMode();
-	//联机模式
+
+	/*
+	联机模式
+	*/
 	void netMode();
-	//创建房间
-	void createRoom();
-	//textinput
-	void startText();
-	//connect
-	void connect();
-
 };
-
-
 
 
 

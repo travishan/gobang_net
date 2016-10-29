@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __WINDOWMANAGER__H__
 #define __WINDOWMANAGER__H__
 

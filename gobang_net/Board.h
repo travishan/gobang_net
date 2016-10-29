@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __BOARD__H__
 #define __BOARD__H__
 
@@ -10,28 +9,6 @@ class Board
 {
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

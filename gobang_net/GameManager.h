@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __GAMEMANAGER__H__
 #define __GAMEMANAGER__H__
 

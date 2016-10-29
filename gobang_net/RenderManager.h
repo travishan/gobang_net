@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __RENDERMANAGER__H__
 #define __RENDERMANAGER__H__
 

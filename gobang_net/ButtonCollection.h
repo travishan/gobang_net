@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __BUTTONMANAGER__H__
 #define __BUTTONMANAGER__H__
 
@@ -35,7 +34,7 @@ public:
 	void runCallBack();
 	//…Ë÷√title
 	void setTitle(const string &str, const SDL_Color &color, int size);
-	
+	const string& getTitle() const { return title; }
 protected:
 	void init(const string &normalImage, const string &selectedImage, const string &disableImage);
 	

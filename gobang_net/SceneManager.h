@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __SCENEMANAGER__H__
 #define __SCENEMANAGER__H__
 

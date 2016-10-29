@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __STATEMANAGER__H__
 #define __STATEMANAGER__H__
 

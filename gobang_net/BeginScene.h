@@ -5,7 +5,6 @@
 #include "define.h"
 #include "WindowManager.h"
 #include "SceneManager.h"
-#include "IOManager.h"
 
 
 class BeginScene : public Scene
@@ -45,6 +44,7 @@ private:
 	void initButton();
 
 
+private:
 
 	/**********************
 	»Øµ÷º¯Êý

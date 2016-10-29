@@ -1,12 +1,21 @@
 #ifndef __DEFINE__H__
 #define __DEFINE__H__
 
-
-
-
+#ifdef _WIN32
 #include <SDL.h>
+#include <SDL_net.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+
+#else
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_net.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+
+#endif // __WIN32
+
+
 #include <string>
 #include <memory>
 #include <iostream>
@@ -58,6 +67,32 @@ using namespace std;
 #define TOP_BOUND 0
 #define BOTTOM_BOUND 518
 
+
+/*
+客户端向服务器发送的消息头   uint16_t类型
+*/
+#define FLAG_PLAY 0x0011				//下棋
+#define FLAG_ASK_REGRET 0x0012	//请求悔棋
+#define FLAG_RETURN_REGRET 0x0013  //另一方返回是否同意悔棋
+#define FLAG_READY 0x0014   //客户端准备好开始游戏
+
+/*
+服务端向客户端发送的消息头  uint16_t类型
+*/
+#define FLAG_WAIT 0x0021				//等待另一个玩家
+#define FLAG_START 0x0022				//开始游戏
+#define FLAG_RUN 0x0023					//等待
+#define FLAG_CHANGE 0x0024			//换边
+#define FLAG_QUERY_REGRET 0x0025//询问另一个
+#define FLAG_REGRETED 0x0026		//悔棋
+#define FLAG_FULL 0x0027					//所有房间都满了
+#define FLAG_END 0x0028					//游戏结束
+
+
+typedef uint16_t FlagType;
+typedef uint16_t LengthType;
+typedef uint8_t* DataType;
+
 #define PropertyBuilderByName(type, name, name2, domain)\
 	domain:\
 		type name;\
@@ -86,7 +121,7 @@ enum CHESS_COLOR
 	N
 };
 
-typedef struct B_POINT
+typedef struct
 {
 	int row;
 	int col;
@@ -105,12 +140,17 @@ enum DIR
 	LEFT,
 	RIGHT,
 };
+
+/*
+游戏状态  房间中的游戏状态
+*/
 enum GameState
 {
-	Select = 0,
-	Single,
-	Network,
-	Ending
+	WAIT = 0,
+	START,
+	RUN,
+	REGRET,
+	END
 };
 
 inline

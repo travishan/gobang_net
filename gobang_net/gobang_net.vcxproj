@@ -126,11 +126,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BeginScene.h" />
-    <ClInclude Include="Board.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Referee.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="ButtonCollection.h" />
+    <ClInclude Include="ClientSocket.h" />
+    <ClInclude Include="Connector.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="NetScene.h" />
     <ClInclude Include="IOManager.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="RenderManager.h" />
@@ -141,11 +146,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BeginScene.cpp" />
-    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Referee.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="ButtonCollection.cpp" />
+    <ClCompile Include="ClienSocket.cpp" />
+    <ClCompile Include="Connector.cpp" />
     <ClCompile Include="define.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="NetScene.cpp" />
     <ClCompile Include="IOManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RenderManager.cpp" />

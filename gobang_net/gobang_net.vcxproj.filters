@@ -30,9 +30,6 @@
     <ClInclude Include="IOManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="FrameManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -54,6 +51,24 @@
     <ClInclude Include="ButtonCollection.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ClientSocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Connector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Referee.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NetScene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,9 +81,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="IOManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Board.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FrameManager.cpp">
@@ -90,6 +102,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="define.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClienSocket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Connector.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Referee.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NetScene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

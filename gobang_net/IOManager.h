@@ -10,10 +10,10 @@ class IOManager : public Manager
 	PropertyBuilderByName(bool, quit, Quit, private)
 	PropertyBuilderByName(bool, mouseLeftDown, MouseLeftDown, private)
 	PropertyBuilderByName(bool, mouseLeftUp, MouseLeftUp, private)
-	PropertyBuilderByName(TextInput*, textInput, TextInput, private)
+	//PropertyBuilderByName(TextInput*, textInput, TextInput, private)
 	SingletonBuilder(IOManager)
 public:
-	IOManager() :quit(0), mouseLeftDown(false), mouseLeftUp(false), textInput(nullptr) {}
+	IOManager() :quit(0), mouseLeftDown(false), mouseLeftUp(false) {}
 	~IOManager() {}
 
 	virtual void startUp();

@@ -145,7 +145,7 @@ void ButtonCollection::checkClick(bool mouseLeftDown,bool mouseLeftUp) {
 	if (!mouseLeftDown && !mouseLeftUp) {
 		return;
 	}
-	for (int i = 0; i < buttons.size(); ++i) {
+	for (size_t i = 0; i < buttons.size(); ++i) {
 		if (!buttons[i]->getDisabled()) {
 			if (mouseLeftDown) {
 				if (buttons[i]->hit(x, y) && !buttons[i]->getSelected()) {

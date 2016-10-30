@@ -15,7 +15,7 @@
 class GameManager
 {
 public:
-	GameManager() :gameState(Select), quit(false) {}
+	GameManager() :gameState(WAIT), quit(false) {}
 
 	void run();
 private:

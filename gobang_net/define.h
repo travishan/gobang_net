@@ -1,17 +1,22 @@
 #ifndef __DEFINE__H__
 #define __DEFINE__H__
 
+
+
 #ifdef _WIN32
+#include <Windows.h>
 #include <SDL.h>
-#include <SDL_net.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_net.h>
+#include <SDL_thread.h>
 
 #else
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_net.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_net.h>
+#include <SDL2/SDL_thread.h>
 
 #endif // __WIN32
 
@@ -21,11 +26,12 @@
 #include <iostream>
 #include <sstream>
 #include <tchar.h>
-#include <Windows.h>
 #include <vector>
 #include <time.h>
 #include <functional>
 #include <stack>
+
+
 
 using namespace std;
 
@@ -92,6 +98,24 @@ using namespace std;
 typedef uint16_t FlagType;
 typedef uint16_t LengthType;
 typedef uint8_t* DataType;
+
+
+/*
+消息包格式
+*/
+typedef struct
+{
+	uint16_t name[16];
+	uint16_t color;//玩家颜色
+	uint16_t connected;
+	uint16_t disconnected;
+	uint16_t regret;
+	uint16_t roomIndx;
+	uint16_t playerIndex;
+	uint16_t yourIndex;
+	uint16_t prepared;
+}WaitMessageStruct;
+
 
 #define PropertyBuilderByName(type, name, name2, domain)\
 	domain:\
@@ -169,5 +193,6 @@ void fillMatrix(CHESS_COLOR(&a)[15][15], int n) {
 }
 
 char* localeToUTF8(const char *src);
+
 
 #endif // !__DEFINE__H__

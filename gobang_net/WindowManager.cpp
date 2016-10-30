@@ -22,6 +22,9 @@ void WindowManager::init(string title) {
 	if (TTF_Init() == -1) {
 		throw runtime_error("TTF Init Failed");
 	}
+	if (SDLNet_Init() == -1) {
+		throw runtime_error("SDLNet_Init Failed");
+	}
 
 	//Setup our window size
 	winBox.x = 0;

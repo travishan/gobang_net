@@ -87,9 +87,16 @@ protected:
 	/*
 	初始化Texture函数
 	*/
+	void loadAll();
 	void loadBoardTexture(const string &);
 	void loadChessTexture(const string &, const string &);
 
+	/*
+	render函数
+	*/
+	void renderBoard();
+
+	
 protected:
 	/*玩家对象
 	*/
@@ -127,8 +134,7 @@ protected:
 	/*所有需要绘制的Texture
 	*/
 	shared_ptr<SDL_Texture> boardTexture;
-	shared_ptr<SDL_Texture> whiteChessTexture;
-	shared_ptr<SDL_Texture> blackChessTexture;
+	shared_ptr<SDL_Texture> chessTextures[2];
 
 	/*棋盘和棋子的目标矩形
 	*/

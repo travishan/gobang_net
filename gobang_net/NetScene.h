@@ -2,7 +2,6 @@
 #define __NETSCENE__H__
 
 #include "define.h"
-#include "WindowManager.h"
 #include "SceneManager.h"
 #include "Room.h"
 #include "Connector.h"
@@ -19,14 +18,22 @@ Room类主要保存了当前一场游戏的所以相关函数，选择作为父类主要是单机对战和网络对战
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 9088
 
+
+/*
+线程函数 友元
+*/
+int recvThread(void *data);
+
+
 class NetScene : public Scene, Room, Connector
 {
+	friend int recvThread(void*data);
 public:
 	NetScene();
 	~NetScene();
 
 	/*
-	逻辑处理函数  virtual
+	逻辑处理函数 virtual
 	*/
 	void logic();
 
@@ -38,22 +45,22 @@ public:
 	/*
 	执行游戏逻辑
 	*/
-	void frame();
+	virtual void frame();
 private:
 	/*
 	处理wait 的逻辑
 	*/
-	void waitState();
+	virtual void waitState();
 
 	/*
 	处理start 的逻辑
 	*/
-	void startState();
+	virtual void startState();
 
 	/*
 	处理run 的逻辑
 	*/
-	void runState() ;
+	virtual void runState() ;
 
 	/*
 	接收服务器消息
@@ -63,9 +70,45 @@ private:
 	/*
 	判断游戏状态
 	*/
-	void checkGameState();
-private:
+	bool checkGameState();
 
+	/*
+	解析waitMessage
+	*/
+	void getWaitMessage(const WaitMessageStruct &message);
+
+	/*
+	接收玩家1和玩家2的消息
+	*/
+	void recvPlayerMessage();
+
+	/*
+	初始化button
+	*/
+	void initButton();
+
+	/*
+	回调函数
+	*/
+	void prepareBtnCallBack();
+private:
+	/*我的编号
+	*/
+	int myIndex;
+
+	/*准备button
+	*/
+	Button *prepareBtn;
+
+	/*
+	线程相关函数
+	*/
+	SDL_Thread *thread;
+	/*退出标识
+	*/
+	bool threadQuit;
+	void initThread();
+	void releareThread();
 	
 };
 

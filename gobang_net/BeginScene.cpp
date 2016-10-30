@@ -59,6 +59,9 @@ void BeginScene::singleMode() {
 void BeginScene::netMode() {
 	cout << "netMode" << endl;
 
-	singleBtn->setDisabled(true);
-	netBtn->setDisabled(true);
+	/*singleBtn->setDisabled(true);
+	netBtn->setDisabled(true);*/
+
+	auto sceneMgr = SceneManager::get();
+	sceneMgr->push(new NetScene());
 }

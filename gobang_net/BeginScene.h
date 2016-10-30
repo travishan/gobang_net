@@ -5,7 +5,7 @@
 #include "define.h"
 #include "WindowManager.h"
 #include "SceneManager.h"
-
+#include "NetScene.h"
 
 class BeginScene : public Scene
 {

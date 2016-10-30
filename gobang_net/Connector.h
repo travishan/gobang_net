@@ -1,7 +1,6 @@
 #ifndef __CONNECTOR__H__
 #define __CONNECTOR__H__
 
-#include "define.h"
 #include "ClientSocket.h"
 
 
@@ -24,7 +23,7 @@ public:
 	/*
 	接收服务器消息
 	*/
-	virtual void recv() = 0;
+	virtual void recvData() = 0;
 
 //private:
 //

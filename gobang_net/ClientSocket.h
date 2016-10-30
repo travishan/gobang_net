@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __CLIENT__SOCKET__H__
 #define __CLIENT__SOCKET__H__
 

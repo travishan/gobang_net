@@ -1,10 +1,6 @@
 #include "ClientSocket.h"
 
 
-
-
-
-
 void ClientSocket::closeSocket() {
 	if (SDLNet_TCP_DelSocket(socket_set, socket) == -1) {
 		fprintf(stderr, "%s\n", SDLNet_GetError());
@@ -65,6 +61,9 @@ uint8_t* ClientSocket::recvData(uint16_t &flag,uint16_t &length) {
 
 
 void ClientSocket::initNetwork(const char* pIP, int iPort) {
+	if (SDLNet_Init() == -1) {
+		throw runtime_error("SDLNet_Init Failed");
+	}
 	IPaddress ip;
 	if (SDLNet_ResolveHost(&ip, pIP, iPort) == -1) {
 		fprintf(stderr, "%s\n", SDLNet_GetError());

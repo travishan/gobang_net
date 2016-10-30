@@ -12,7 +12,7 @@ NetScene::NetScene() : myIndex(-1), prepareBtn(nullptr), thread(nullptr), thread
 
 NetScene::~NetScene() {
 	Connector::disconnect();
-	
+	releaseThread();
 }
 
 /*
@@ -36,19 +36,6 @@ void NetScene::render() {
 执行游戏逻辑
 */
 void NetScene::frame() {
-	recvData();
-}
-
-
-/*
-接收服务器消息
-*/
-void NetScene::recvData() {
-	//Room::checkDisconnect();
-	
-	if (!checkGameState()) {
-		return;
-	}
 	switch (gameState) {
 	case WAIT:
 		waitState();
@@ -60,45 +47,54 @@ void NetScene::recvData() {
 		runState();
 		break;
 	case REGRET:
-	{
-
-	}
-	break;
+		break;
 	case END:
 	{
-		cout << "有玩家断开连接" << endl;
-
+		cout << "游戏结束" << endl;
 	}
-	break;
+		break;
 	}
 }
+
 
 /*
 判断游戏状态
 */
-bool NetScene::checkGameState() {
-	if (flag == FLAG_WAIT || flag == FLAG_FULL) {
-		gameState = WAIT;
-	} else if (flag == FLAG_START) {
-		gameState = START;
-	} else if (flag == FLAG_RUN || flag == FLAG_CHANGE) {
-		gameState = RUN;
-	} else if (flag == FLAG_QUERY_REGRET || flag == FLAG_REGRETED) {
-		gameState = REGRET;
-	}else if (flag == FLAG_END) {
-		gameState = END;
-	} else {
-		cerr << "错误：接收到异常标识。" << endl;
-		return false;
-		//It's not gonna happen or something seriously occured!!
-	}
-	return true;
+//bool NetScene::checkGameState() {
+//	if (flag == FLAG_WAIT || flag == FLAG_FULL) {
+//		gameState = WAIT;
+//	} else if (flag == FLAG_START) {
+//		gameState = START;
+//	} else if (flag == FLAG_RUN || flag == FLAG_CHANGE) {
+//		gameState = RUN;
+//	} else if (flag == FLAG_QUERY_REGRET || flag == FLAG_REGRETED) {
+//		gameState = REGRET;
+//	}else if (flag == FLAG_END) {
+//		gameState = END;
+//	} else {
+//		cerr << "错误：接收到异常标识。" << endl;
+//		return false;
+//		//It's not gonna happen or something seriously occured!!
+//	}
+//	return true;
+//}
+
+/*
+解析GameMessage
+*/
+void NetScene::setGameMessage(const Game_Message &message) {
+	gameState = (GameState)message.gameState;
+	p1Index = message.p1Index;
+	p2Index = message.p2Index;
+	currentPlayer = message.curSide;
+	playerNum = message.playerNum;
+	lastTime = message.time;
 }
 
 /*
 解析waitMessage
 */
-void NetScene::getWaitMessage(const WaitMessageStruct &message) {
+void NetScene::setPlayerMessage(const Player_Message &message) {
 	myIndex = message.yourIndex;
 	int playerIndex = message.playerIndex;
 	Player *p = nullptr;
@@ -129,7 +125,8 @@ void NetScene::getWaitMessage(const WaitMessageStruct &message) {
 */
 void NetScene::waitState() {
 	cout << "现在是等待状态" << endl;
-	recvPlayerMessage();
+	cout << "current player number : " << playerNum;
+	cout << "p1Index : " << p1Index << ", p2Index :" << p2Index << endl << endl;
 }
 
 /*
@@ -137,7 +134,6 @@ void NetScene::waitState() {
 */
 void NetScene::startState() {
 	cout << "现在是开始状态" << endl;
-	recvPlayerMessage();
 }
 
 /*
@@ -147,26 +143,20 @@ void NetScene::runState() {
 
 }
 
-
 /*
 接收玩家1和玩家2的消息
 */
-void NetScene::recvPlayerMessage() {
-	WaitMessageStruct message;
-	memcpy(&message, data, length);
-	getWaitMessage(message);
-	char name[16];
-	memcpy(name, message.name, 16);
-	cout << name;
-	cout << " 本机编号：" << message.yourIndex;
-	cout << " 当前包玩家颜色：" << message.color << " 当前包玩家索引：" << message.playerIndex;
-	cout << " 当前包准备否 ：" << message.prepared << endl << endl;
-}
-
-
-
-
-
+//void NetScene::recvPlayerMessage() {
+//	Player_Message message;
+//	memcpy(&message, data, length);
+//	getWaitMessage(message);
+//	char name[16];
+//	memcpy(name, message.name, 16);
+//	cout << name;
+//	cout << " 本机编号：" << message.yourIndex;
+//	cout << " 当前包玩家颜色：" << message.color << " 当前包玩家索引：" << message.playerIndex;
+//	cout << " 当前包准备否 ：" << message.prepared << endl << endl;
+//}
 
 
 /***********************
@@ -198,15 +188,40 @@ void NetScene::prepareBtnCallBack() {
 }
 
 
-/*线程函数
+/*
+线程函数  负责接收从服务器发来的消息，并进行解析
+GameMessage 当前游戏相关信息
+PlayerMessage 当前玩家相关信息
+PlayMessage 走棋方相关信息
+RegretMessage 悔棋相关信息
 */
 
 int recvThread(void *data) {
 	NetScene *netScene = (NetScene*)data;
+	FlagType flag = 0;
+	DataType recvData = nullptr;
+	LengthType length = 0;
 	while (!netScene->threadQuit) {
-		netScene->data = netScene->client.recvData(netScene->flag, netScene->length);
+		recvData = netScene->client.recvData(flag, length);
+		switch (flag) {
+		case FLAG_GAME_INFO:
+		{
+			Game_Message msg;
+			memcpy(&msg, recvData, length);
+			netScene->setGameMessage(msg);
+		}break;
+		case FLAG_PLAYER_INFO:
+		{
+			Player_Message msg;
+			memcpy(&msg, recvData, length);
+			netScene->setPlayerMessage(msg);
+		}break;
+		case FLAG_PLAY_INFO:
+			break;
+		case FLAG_QUERY_REGRET:
+			break;
+		}
 	}
-	
 	return 0;
 }
 
@@ -215,6 +230,7 @@ void NetScene::initThread() {
 	thread = SDL_CreateThread(recvThread, "recvThread", this);
 }
 
-void NetScene::releareThread() {
+void NetScene::releaseThread() {
 	threadQuit = true;
+	//SDL_LASTERROR
 }

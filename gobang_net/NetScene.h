@@ -63,24 +63,18 @@ private:
 	virtual void runState() ;
 
 	/*
-	接收服务器消息
+	解析PlayerMessage
 	*/
-	virtual void recvData();
-
+	void setPlayerMessage(const Player_Message &message);
 	/*
-	判断游戏状态
+	解析GameMessage
 	*/
-	bool checkGameState();
-
-	/*
-	解析waitMessage
-	*/
-	void getWaitMessage(const WaitMessageStruct &message);
+	void setGameMessage(const Game_Message &message);
 
 	/*
 	接收玩家1和玩家2的消息
 	*/
-	void recvPlayerMessage();
+	//void recvPlayerMessage();
 
 	/*
 	初始化button
@@ -101,14 +95,12 @@ private:
 	Button *prepareBtn;
 
 	/*
-	线程相关函数
+	线程相关变量 和 函数
 	*/
 	SDL_Thread *thread;
-	/*退出标识
-	*/
-	bool threadQuit;
-	void initThread();
-	void releareThread();
+	bool threadQuit;//退出线程标识
+	void initThread();//初始化线程
+	void releaseThread();//释放线程变量
 	
 };
 

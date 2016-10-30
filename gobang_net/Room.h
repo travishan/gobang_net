@@ -104,7 +104,7 @@ protected:
 
 	/*玩家索引
 	*/
-	int p1Index, p2Index;
+	uint16_t p1Index, p2Index;
 
 	/*棋盘
 	*/
@@ -116,11 +116,11 @@ protected:
 
 	/*时间计时
 	*/
-	int lastTime;
+	uint16_t lastTime;
 
 	/*当前人数
 	*/
-	int playerNum;
+	uint16_t playerNum;
 
 	/*游戏状态
 	*/

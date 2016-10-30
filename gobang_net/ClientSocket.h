@@ -2,8 +2,14 @@
 #define __CLIENT__SOCKET__H__
 
 #include "define.h"
+#include "MessageDefine.h"
 
 #define MAX_PACKET 1024
+
+
+
+
+
 
 class ClientSocket
 {

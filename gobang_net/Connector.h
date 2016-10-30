@@ -20,11 +20,6 @@ public:
 	*/
 	void disconnect();
 
-	/*
-	接收服务器消息
-	*/
-	virtual void recvData() = 0;
-
 //private:
 //
 //	/*
@@ -42,13 +37,6 @@ protected:
 	使用SDL封装的socket层连接类
 	*/
 	ClientSocket client;
-	
-	/*
-	从服务器接收的数据   消息类型flag，数据长度length，数据data
-	*/
-	FlagType flag;
-	LengthType length;
-	DataType data;
 };
 
 

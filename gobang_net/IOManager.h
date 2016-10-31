@@ -23,9 +23,12 @@ public:
 	void resetMouse() {
 		mouseLeftDown = mouseLeftUp = false;
 	}
+
+	void addMouseFunc(const function<void()>&);
 	
 private:
 	SDL_Event e;
+	vector<function<void()>> mouseFuncVec;
 };
 
 

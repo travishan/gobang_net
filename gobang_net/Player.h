@@ -28,7 +28,8 @@ public:
 	recordIterator end() { return record.end(); }
 	size_t size() { return size(); }
 	void push_back(const B_POINT &b) { record.push_back(b); }
-	B_POINT front() { return record.front(); }
+	const B_POINT &front() { return record.front(); }
+	void clear() { record.clear(); }
 
 	//¶Ï¿ªÁ¬½Ó
 	void disconnect() { disconnected = true;}

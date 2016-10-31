@@ -17,8 +17,8 @@ Room类主要保存了当前一场游戏的所以相关函数，选择作为父类主要是单机对战和网络对战
 
 ******************/
 
-//#define SERVER_IP "127.0.0.1"
-#define SERVER_IP "115.159.220.253"
+#define SERVER_IP "127.0.0.1"
+//#define SERVER_IP "115.159.220.253"
 #define SERVER_PORT 9088
 
 
@@ -92,7 +92,8 @@ private:
 	/*
 	回调函数
 	*/
-	void prepareBtnCallBack();
+	void prepareCallback();
+	void restartCallback();
 
 	/*
 	根据服务器消息设置敌手的棋子
@@ -101,9 +102,10 @@ private:
 
 private:
 
-	/*准备button
+	/*button
 	*/
-	Button *prepareBtn;
+	Button *prepareBtn;//准备按钮
+	Button *restartBtn;//重新开始按钮
 
 	/*
 	线程相关变量 和 函数

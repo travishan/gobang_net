@@ -6,6 +6,9 @@ Room::Room() :
 	gameState(WAIT), lastTicks(0), boardTexture(nullptr),
 	mouseRow(0), mouseCol(0), myIndex(-1) {
 	initRoom();
+
+	auto ioMgr = IOManager::get();
+	ioMgr->addMouseFunc(bind(&Room::runState, this));
 }
 
 Room::~Room() {}
@@ -157,14 +160,33 @@ bool Room::checkMouseDown() {
 }
 
 /*
+重新开始  修改游戏状态为start，重新初始化棋盘，清空玩家棋子记录，交换玩家的颜色，设置黑棋方为先走。
+*/
+void Room::restartInit() {
+	gameState = RUN;
+	initBoard();
+	p1->clear();
+	p2->clear();
+	winner = 65535;
+	auto p1Color = p1->getColor();
+	auto p2Color = p2->getColor();
+	p1->setColor(p2Color);
+	p2->setColor(p1Color);
+	if (p1Color == W) {
+		currentPlayer = p1Index;
+	} else {
+		currentPlayer = p2Index;
+	}
+}
+
+/*
 判断玩家走棋
 */
 bool Room::play() {
-	
-	if (gameState == RUN &&currentPlayer == myIndex) {
-		auto ioMgr = IOManager::get();
-		if (ioMgr->getMouseLeftUp()) {
-			ioMgr->setMouseLeftUp(false);
+	auto ioMgr = IOManager::get();
+	if (ioMgr->getMouseLeftUp()) {
+		//ioMgr->setMouseLeftUp(false);
+		if (gameState == RUN && currentPlayer == myIndex) {
 			auto p = getPlayer(myIndex);
 			if (p == nullptr) return false;
 			auto color = p->getColor();

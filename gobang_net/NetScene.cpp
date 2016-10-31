@@ -3,7 +3,7 @@
 
 
 
-NetScene::NetScene() : prepareBtn(nullptr), thread(nullptr), sendThread(nullptr), threadQuit(false), sendFlag(false){
+NetScene::NetScene() : prepareBtn(nullptr), restartBtn(nullptr), thread(nullptr), sendThread(nullptr), threadQuit(false), sendFlag(false){
 	Connector::connect(SERVER_IP, SERVER_PORT);
 	Room::loadAll();
 	initButton();
@@ -101,14 +101,12 @@ void NetScene::frame() {
 		startState();
 		break;
 	case RUN:
-		runState();
+		//runState();
 		break;
 	case REGRET:
 		break;
 	case END:
-	{
-		//cout << "游戏结束" << endl;
-	}
+		endState();
 		break;
 	}
 }
@@ -124,6 +122,10 @@ void NetScene::setGameMessage(const Game_Message &message) {
 	playerNum = message.playerNum;
 	lastTime = message.time;
 	winner = message.winner;
+
+	if (winner != 65535) {
+		restartBtn->setDisabled(false);
+	}
 }
 
 /*
@@ -181,16 +183,13 @@ void NetScene::runState() {
 		sendFlag = true;
 		changeSide();
 	}
-	
 }
 
 /*
 处理end 的逻辑
 */
 void NetScene::endState() {
-	if (winner != 65535) {
-		
-	}
+	
 }
 
 
@@ -208,18 +207,32 @@ void NetScene::initButton() {
 	prepareBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
 	prepareBtn->setPosition(210, 380);
 	prepareBtn->setTitle("准备", SDL_Color{ 0, 0, 0 }, 20);
-	prepareBtn->setCallback(CALLBACK_0(NetScene::prepareBtnCallBack, this));
+	prepareBtn->setCallback(CALLBACK_0(NetScene::prepareCallback, this));
 	this->addButton(prepareBtn);
+
+	restartBtn = Button::create(BUTTON_NORMAL_FILE, BUTTON_SELECTED_FILE, BUTTON_DISABLE_FILE);
+	restartBtn->setPosition(210, 380);
+	restartBtn->setTitle("再来一局", SDL_Color{ 0, 0, 0 }, 20);
+	restartBtn->setCallback(CALLBACK_0(NetScene::restartCallback, this));
+	this->addButton(restartBtn);
+	restartBtn->setDisabled(true);
 }
 
 /*
 回调函数
 */
-void NetScene::prepareBtnCallBack() {
+void NetScene::prepareCallback() {
 	FlagType flag = FLAG_READY;
 	client.sendData(nullptr, 0, flag);
 	prepareBtn->setDisabled(true);
 }
+
+void NetScene::restartCallback() {
+	client.sendData(nullptr, 0, FLAG_READY);
+	restartInit();
+	restartBtn->setDisabled(true);
+}
+
 
 /*
 根据服务器消息设置敌手的棋子
@@ -262,8 +275,6 @@ int recvThreadFunc(void *data) {
 			Player_Message msg;
 			memcpy(&msg, recvData, length);
 			netScene->setPlayerMessage(msg);
-			char name[16];
-			memcpy(name, msg.name, 16);
 			if(recvData) delete recvData;
 		}break;
 		case FLAG_PLAY_INFO:
@@ -271,7 +282,6 @@ int recvThreadFunc(void *data) {
 			B_POINT point;
 			memcpy(&point, recvData, length);
 			netScene->setAnotherPoint(point);
-			cout << "row: " << point.row << " col: " << point.col << endl;
 			if (recvData) delete recvData;
 		}
 			break;

@@ -27,6 +27,9 @@ void IOManager::input(bool &quit) {
 				mouseLeftDown = false;
 				mouseLeftUp = true;
 			}
+			for (auto &func : mouseFuncVec) {
+				func();
+			}
 		} /*else if (e.type == SDL_TEXTINPUT) {
 			cout << e.text.text << endl;
 			textInput->append(e.text.text);
@@ -34,4 +37,8 @@ void IOManager::input(bool &quit) {
 			cout << e.edit.text << " " << e.edit.start << " " << e.edit.length << endl;
 		} */
 	}
+}
+
+void IOManager::addMouseFunc(const function<void()> &func) {
+	mouseFuncVec.push_back(func);
 }

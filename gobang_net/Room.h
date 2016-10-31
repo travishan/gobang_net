@@ -85,6 +85,11 @@ protected:
 	*/
 	void checkDisconnect();
 
+	/*
+	重新开始
+	*/
+	void restartInit();
+
 protected:
 	/*
 	处理wait 的逻辑和渲染
@@ -185,7 +190,7 @@ protected:
 
 	/*我的编号
 	*/
-	int myIndex;
+	uint16_t myIndex;
 
 	/*
 	裁判对象

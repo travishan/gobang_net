@@ -3,9 +3,11 @@
 
 
 #include "define.h"
+#include "MathDefine.h"
 #include "Player.h"
 #include "Referee.h"
 #include "WindowManager.h"
+#include "IOManager.h"
 
 #define PLAYTIME 30
 
@@ -28,7 +30,7 @@ public:
 	/*
 	初始化玩家1,2
 	*/
-	bool addPlayer(const shared_ptr<Player> &player, int index);
+	bool addPlayer(const shared_ptr<Player> &player, uint16_t index);
 
 	/*
 	初始化房间
@@ -40,12 +42,27 @@ public:
 	*/
 	virtual void frame() = 0;
 
+	/*获取玩家
+	*/
+	Player* getPlayer(uint16_t pi);
+	Player* getAnotherPlayer(uint16_t pi);
+
+	/*
+	换边
+	*/
+	void changeSide();
+
 	/*
 	get set
 	*/
-	int getPlayerNum() { return playerNum; }
+	uint16_t getPlayerNum() { return playerNum; }
 	void setGameState(GameState state) { gameState = state; }
 	GameState getGameState() { return gameState; }
+	void setRoomIndex(uint16_t index) { roomIndex = index; }
+	uint16_t getRoomIndex() { return roomIndex; }
+	void setWinner(uint16_t player) { winner = player; }
+	uint16_t getWinner() { return winner; }
+
 protected:
 	/*
 	初始化棋盘
@@ -60,29 +77,38 @@ protected:
 	/*
 	初始化玩家1 和 玩家2
 	*/
-	void initP1(const shared_ptr<Player> &player, int index);
-	void initP2(const shared_ptr<Player> &player, int index);
+	void initP1(const shared_ptr<Player> &player, uint16_t index);
+	void initP2(const shared_ptr<Player> &player, uint16_t index);
 
 	/*
 	检查有无掉线玩家
 	*/
 	void checkDisconnect();
+
 protected:
 	/*
-	处理wait 的逻辑
+	处理wait 的逻辑和渲染
 	*/
 	virtual void waitState() = 0;
+	virtual void waitStateRender() = 0;
 
 	/*
-	处理start 的逻辑
+	处理start 的逻辑和渲染
 	*/
 	virtual void startState() = 0;
+	virtual void startStateRender() = 0;
 
 	/*
-	处理run 的逻辑
+	处理run 的逻辑和渲染
 	*/
 	virtual void runState() = 0;
+	virtual void runStateRender() = 0;
 
+	/*
+	处理end 的逻辑
+	*/
+	virtual void endState() = 0;
+	virtual void endStateRender() = 0;
 protected:
 	/*
 	初始化Texture函数
@@ -96,7 +122,15 @@ protected:
 	*/
 	void renderBoard();
 
-	
+	/*
+	IO交互
+	*/
+	bool checkMouseDown();
+
+	/*
+	判断玩家走棋
+	*/
+	bool play();
 protected:
 	/*玩家对象
 	*/
@@ -106,13 +140,17 @@ protected:
 	*/
 	uint16_t p1Index, p2Index;
 
+	/*房间索引
+	*/
+	uint16_t roomIndex;
+
 	/*棋盘
 	*/
 	CHESS_COLOR chessBoard[GRID_NUM][GRID_NUM];
 
 	/*当前下子方
 	*/
-	CHESS_COLOR currentPlayer;
+	uint16_t currentPlayer;
 
 	/*时间计时
 	*/
@@ -139,6 +177,25 @@ protected:
 	/*棋盘和棋子的目标矩形
 	*/
 	SDL_Rect distRect, chessRect;
+
+	/*
+	鼠标点击对应棋盘格
+	*/
+	uint16_t mouseRow, mouseCol;
+
+	/*我的编号
+	*/
+	int myIndex;
+
+	/*
+	裁判对象
+	*/
+	Referee referee;
+
+	/*
+	胜利方
+	*/
+	uint16_t winner;
 };
 
 

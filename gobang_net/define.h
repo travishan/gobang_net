@@ -97,14 +97,14 @@ public:\
 黑白双方   0代表黑房 1代表白方
 */
 typedef uint16_t CHESS_COLOR;
-#define B 0
-#define W 1
-#define N 2
+const uint16_t B = 0;
+const uint16_t W = 1;
+const uint16_t N = 2;
 
 typedef struct
 {
-	int row;
-	int col;
+	uint16_t row;
+	uint16_t col;
 }B_POINT;
 
 typedef struct VALUE_POINT
@@ -131,21 +131,6 @@ typedef uint16_t GameState;
 #define REGRET 3
 #define END 4
 
-
-inline
-void fillMatrix(int(&a)[15][15][8][2], int n) {
-	memset(a, n, sizeof(a));
-}
-
-inline
-void fillMatrix(int(&a)[15][15], int n) {
-	memset(a, n, sizeof(a));
-}
-
-inline
-void fillMatrix(CHESS_COLOR(&a)[15][15], int n) {
-	memset(a, n, sizeof(a));
-}
 
 char* localeToUTF8(const char *src);
 

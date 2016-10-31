@@ -2,9 +2,11 @@
 #define __NETSCENE__H__
 
 #include "define.h"
-#include "SceneManager.h"
 #include "Room.h"
 #include "Connector.h"
+#include "SceneManager.h"
+
+
 
 /******************
 
@@ -22,12 +24,14 @@ Room类主要保存了当前一场游戏的所以相关函数，选择作为父类主要是单机对战和网络对战
 /*
 线程函数 友元
 */
-int recvThread(void *data);
+int recvThreadFunc(void *data);
+int sendThreadFunc(void *data);
 
 
 class NetScene : public Scene, Room, Connector
 {
-	friend int recvThread(void*data);
+	friend int recvThreadFunc(void*data);
+	friend int sendThreadFunc(void*data);
 public:
 	NetScene();
 	~NetScene();
@@ -51,17 +55,25 @@ private:
 	处理wait 的逻辑
 	*/
 	virtual void waitState();
+	virtual void waitStateRender();
 
 	/*
 	处理start 的逻辑
 	*/
 	virtual void startState();
+	virtual void startStateRender();
 
 	/*
 	处理run 的逻辑
 	*/
 	virtual void runState() ;
+	virtual void runStateRender();
 
+	/*
+	处理end 的逻辑
+	*/
+	virtual void endState();
+	virtual void endStateRender();
 	/*
 	解析PlayerMessage
 	*/
@@ -72,11 +84,6 @@ private:
 	void setGameMessage(const Game_Message &message);
 
 	/*
-	接收玩家1和玩家2的消息
-	*/
-	//void recvPlayerMessage();
-
-	/*
 	初始化button
 	*/
 	void initButton();
@@ -85,10 +92,13 @@ private:
 	回调函数
 	*/
 	void prepareBtnCallBack();
-private:
-	/*我的编号
+
+	/*
+	根据服务器消息设置敌手的棋子
 	*/
-	int myIndex;
+	void setAnotherPoint(B_POINT point);
+
+private:
 
 	/*准备button
 	*/
@@ -97,11 +107,13 @@ private:
 	/*
 	线程相关变量 和 函数
 	*/
-	SDL_Thread *thread;
+	SDL_Thread *thread,*sendThread;
 	bool threadQuit;//退出线程标识
+	bool sendFlag;//发送标识
+
 	void initThread();//初始化线程
 	void releaseThread();//释放线程变量
-	
+
 };
 
 

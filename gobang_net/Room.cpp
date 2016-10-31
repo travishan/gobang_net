@@ -1,26 +1,27 @@
 #include "Room.h"
 
 Room::Room() :
-	p1(nullptr), p2(nullptr), p1Index(-1), p2Index(-1),
+	p1(nullptr), p2(nullptr), p1Index(-1), p2Index(-1), roomIndex(-1),
 	currentPlayer(N), lastTime(0), playerNum(0),
-	gameState(WAIT), lastTicks(0), boardTexture(nullptr){
-	
+	gameState(WAIT), lastTicks(0), boardTexture(nullptr),
+	mouseRow(0), mouseCol(0), myIndex(-1) {
+	initRoom();
 }
 
 Room::~Room() {}
 
-void Room::initP1(const shared_ptr<Player> &player, int index) {
+void Room::initP1(const shared_ptr<Player> &player, uint16_t index) {
 	p1 = player;
 	p1Index = index;
 	p1->setColor(B);
 }
-void Room::initP2(const shared_ptr<Player> &player, int index) {
+void Room::initP2(const shared_ptr<Player> &player, uint16_t index) {
 	p2 = player;
 	p2Index = index;
 	p2->setColor(W);
 }
 
-bool Room::addPlayer(const shared_ptr<Player> &player, int index) {
+bool Room::addPlayer(const shared_ptr<Player> &player, uint16_t index) {
 	if (playerNum == 0) {
 		initP1(player, index);
 	} else if (playerNum == 1) {
@@ -102,5 +103,79 @@ void Room::renderBoard() {
 			winMgr->draw(chessTextures[p2->getColor()].get(), chessRect);
 		}
 	}
+
+}
+
+/*
+换边
+*/
+void Room::changeSide() {
+	if (currentPlayer == p1Index) {
+		currentPlayer = p2Index;
+	} else {
+		currentPlayer = p1Index;
+	}
+}
+
+/*获取玩家
+*/
+Player* Room::getPlayer(uint16_t pi) {
+	Player *p = nullptr;
+	if (pi == p1Index)
+		p = p1.get();
+	else
+		p = p2.get();
+	return p;
+}
+Player* Room::getAnotherPlayer(uint16_t pi) {
+	Player *p = nullptr;
+	if (pi == p1Index)
+		p = p2.get();
+	else if (pi == p2Index)
+		p = p1.get();
+	else
+		return nullptr;
+	return p;
+}
+
+
+/*
+IO交互
+*/
+bool Room::checkMouseDown() {
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	x -= F_X;
+	y -= F_Y;
+	if (x < LEFT_BOUND || y < TOP_BOUND
+		|| x > RIGHT_BOUND || y > BOTTOM_BOUND) {
+		return false;
+	}
+	mouseCol = (uint16_t)x / GRID_WIDTH;
+	mouseRow = (uint16_t)y / GRID_WIDTH;
+	return true;
+}
+
+/*
+判断玩家走棋
+*/
+bool Room::play() {
 	
+	if (gameState == RUN &&currentPlayer == myIndex) {
+		auto ioMgr = IOManager::get();
+		if (ioMgr->getMouseLeftUp()) {
+			ioMgr->setMouseLeftUp(false);
+			auto p = getPlayer(myIndex);
+			if (p == nullptr) return false;
+			auto color = p->getColor();
+			if (checkMouseDown()) {
+				if (chessBoard[mouseRow][mouseCol] == N) {
+					chessBoard[mouseRow][mouseCol] = color;
+					p->push_back(B_POINT{ mouseRow,mouseCol });
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }

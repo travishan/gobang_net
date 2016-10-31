@@ -3,7 +3,7 @@
 
 
 
-NetScene::NetScene() : myIndex(-1), prepareBtn(nullptr), thread(nullptr), threadQuit(false){
+NetScene::NetScene() : prepareBtn(nullptr), thread(nullptr), sendThread(nullptr), threadQuit(false), sendFlag(false){
 	Connector::connect(SERVER_IP, SERVER_PORT);
 	Room::loadAll();
 	initButton();
@@ -28,9 +28,66 @@ void NetScene::logic() {
 */
 void NetScene::render() {
 	Room::renderBoard();
+	switch (gameState) {
+	case WAIT:
+		waitStateRender();
+		break;
+	case START:
+		startStateRender();
+		break;
+	case RUN:
+		runStateRender();
+		break;
+	case REGRET:
+		break;
+	case END:
+		endStateRender();
+		break;
+	}
 	btnCollection->render();
 }
 
+/*
+游戏渲染
+*/
+void NetScene::waitStateRender() {
+	auto winMgr = WindowManager::get();
+	auto text = winMgr->renderText("准备阶段", TTF_FILE, SDL_Color{ 255,0,0 }, 24);
+	winMgr->draw(200, 100, text);
+}
+
+void NetScene::startStateRender() {
+	auto winMgr = WindowManager::get();
+	auto text = winMgr->renderText("开始阶段", TTF_FILE, SDL_Color{ 255,0,0 }, 24);
+	winMgr->draw(200, 100, text);
+	SDL_DestroyTexture(text);
+}
+
+void NetScene::runStateRender() {
+	auto winMgr = WindowManager::get();
+	auto text = winMgr->renderText("游戏进行阶段", TTF_FILE, SDL_Color{ 255,0,0 }, 24);
+	winMgr->draw(200, 100, text);
+	SDL_DestroyTexture(text);
+}
+
+void NetScene::endStateRender() {
+	auto winMgr = WindowManager::get();
+	auto text = winMgr->renderText("游戏结束", TTF_FILE, SDL_Color{ 255,0,0 }, 24);
+	winMgr->draw(200, 100, text);
+	SDL_DestroyTexture(text);
+	if (winner != 65535) {
+		auto winMgr = WindowManager::get();
+		SDL_Texture *texture;
+		if (winner == myIndex) {
+			texture = winMgr->renderText("你赢了", TTF_FILE, SDL_Color{ 255,0,0 }, 24);
+		} else {
+			texture = winMgr->renderText("你输了", TTF_FILE, SDL_Color{ 255,0,0 }, 24);
+		}
+		winMgr->draw(300, 100, texture);
+		SDL_DestroyTexture(texture);
+	}
+	
+}
 
 /*
 执行游戏逻辑
@@ -50,34 +107,11 @@ void NetScene::frame() {
 		break;
 	case END:
 	{
-		cout << "游戏结束" << endl;
+		//cout << "游戏结束" << endl;
 	}
 		break;
 	}
 }
-
-
-/*
-判断游戏状态
-*/
-//bool NetScene::checkGameState() {
-//	if (flag == FLAG_WAIT || flag == FLAG_FULL) {
-//		gameState = WAIT;
-//	} else if (flag == FLAG_START) {
-//		gameState = START;
-//	} else if (flag == FLAG_RUN || flag == FLAG_CHANGE) {
-//		gameState = RUN;
-//	} else if (flag == FLAG_QUERY_REGRET || flag == FLAG_REGRETED) {
-//		gameState = REGRET;
-//	}else if (flag == FLAG_END) {
-//		gameState = END;
-//	} else {
-//		cerr << "错误：接收到异常标识。" << endl;
-//		return false;
-//		//It's not gonna happen or something seriously occured!!
-//	}
-//	return true;
-//}
 
 /*
 解析GameMessage
@@ -89,6 +123,7 @@ void NetScene::setGameMessage(const Game_Message &message) {
 	currentPlayer = message.curSide;
 	playerNum = message.playerNum;
 	lastTime = message.time;
+	winner = message.winner;
 }
 
 /*
@@ -98,65 +133,65 @@ void NetScene::setPlayerMessage(const Player_Message &message) {
 	myIndex = message.yourIndex;
 	int playerIndex = message.playerIndex;
 	Player *p = nullptr;
-	if (playerIndex == myIndex){
+	if (playerIndex == p1Index){
 		if (p1 == nullptr) {
 			p1 = make_shared<Player>(Player());
 		}
 		p = p1.get();
-	} else {
+	} else if(playerIndex == p2Index){
 		if (p2 == nullptr) {
 			p2 = make_shared<Player>(Player());
 		}
 		p = p2.get();
+	} else {
+		return;
 	}
 	p->setColor((CHESS_COLOR)message.color);
 	char name[16];
 	memcpy(name, message.name, 16);
 	p->setName(name);
-	p->setConnected((uint32_t)message.connected);
-	p->setRegret((uint32_t)message.regret);
-	p->setDisconnected((uint32_t)message.disconnected);
-	p->setRoomIndex((uint32_t)message.roomIndx);
-	p->setPrepared((uint32_t)message.prepared);
+	p->setConnected((bool)message.connected);
+	p->setRegret((bool)message.regret);
+	p->setDisconnected((bool)message.disconnected);
+	p->setRoomIndex((uint16_t)message.roomIndx);
+	p->setPrepared((bool)message.prepared);
 }
 
 /*
 处理wait 的逻辑
 */
 void NetScene::waitState() {
-	cout << "现在是等待状态" << endl;
+	/*cout << "现在是等待状态" << endl;
 	cout << "current player number : " << playerNum;
-	cout << "p1Index : " << p1Index << ", p2Index :" << p2Index << endl << endl;
+	cout << "p1Index : " << p1Index << ", p2Index :" << p2Index << endl << endl;*/
 }
 
 /*
 处理start 的逻辑
 */
 void NetScene::startState() {
-	cout << "现在是开始状态" << endl;
+	
 }
 
 /*
 处理Run 的逻辑
 */
 void NetScene::runState() {
-
+	if (Room::play()) {
+		sendFlag = true;
+		changeSide();
+	}
+	
 }
 
 /*
-接收玩家1和玩家2的消息
+处理end 的逻辑
 */
-//void NetScene::recvPlayerMessage() {
-//	Player_Message message;
-//	memcpy(&message, data, length);
-//	getWaitMessage(message);
-//	char name[16];
-//	memcpy(name, message.name, 16);
-//	cout << name;
-//	cout << " 本机编号：" << message.yourIndex;
-//	cout << " 当前包玩家颜色：" << message.color << " 当前包玩家索引：" << message.playerIndex;
-//	cout << " 当前包准备否 ：" << message.prepared << endl << endl;
-//}
+void NetScene::endState() {
+	if (winner != 65535) {
+		
+	}
+}
 
 
 /***********************
@@ -177,7 +212,6 @@ void NetScene::initButton() {
 	this->addButton(prepareBtn);
 }
 
-
 /*
 回调函数
 */
@@ -186,6 +220,18 @@ void NetScene::prepareBtnCallBack() {
 	client.sendData(nullptr, 0, flag);
 	prepareBtn->setDisabled(true);
 }
+
+/*
+根据服务器消息设置敌手的棋子
+*/
+void NetScene::setAnotherPoint(B_POINT point) {
+	auto p = getAnotherPlayer(myIndex);
+	if (p == nullptr) return;
+	auto color = p->getColor();
+	chessBoard[point.row][point.col] = color;
+	p->push_back(point);
+}
+
 
 
 /*
@@ -196,7 +242,7 @@ PlayMessage 走棋方相关信息
 RegretMessage 悔棋相关信息
 */
 
-int recvThread(void *data) {
+int recvThreadFunc(void *data) {
 	NetScene *netScene = (NetScene*)data;
 	FlagType flag = 0;
 	DataType recvData = nullptr;
@@ -209,14 +255,25 @@ int recvThread(void *data) {
 			Game_Message msg;
 			memcpy(&msg, recvData, length);
 			netScene->setGameMessage(msg);
+			if (recvData) delete recvData;
 		}break;
 		case FLAG_PLAYER_INFO:
 		{
 			Player_Message msg;
 			memcpy(&msg, recvData, length);
 			netScene->setPlayerMessage(msg);
+			char name[16];
+			memcpy(name, msg.name, 16);
+			if(recvData) delete recvData;
 		}break;
 		case FLAG_PLAY_INFO:
+		{
+			B_POINT point;
+			memcpy(&point, recvData, length);
+			netScene->setAnotherPoint(point);
+			cout << "row: " << point.row << " col: " << point.col << endl;
+			if (recvData) delete recvData;
+		}
 			break;
 		case FLAG_QUERY_REGRET:
 			break;
@@ -225,12 +282,28 @@ int recvThread(void *data) {
 	return 0;
 }
 
+int sendThreadFunc(void *data) {
+	NetScene *netScene = (NetScene*)data;
+	while (!netScene->threadQuit) {
+		if (netScene->sendFlag) {
+			auto my = netScene->getPlayer(netScene->myIndex);
+			auto p = *(my->end() - 1);
+			DataType data = new uint8_t[sizeof(B_POINT)];
+			memcpy(data, &p, sizeof(B_POINT));
+			netScene->client.sendData(data, sizeof(B_POINT), FLAG_PLAY);
+			delete data;
+			netScene->sendFlag = false;
+		}
+	}
+	return 0;
+}
+
 void NetScene::initThread() {
 	//创建并运行线程
-	thread = SDL_CreateThread(recvThread, "recvThread", this);
+	thread = SDL_CreateThread(recvThreadFunc, "recvThread", this);
+	sendThread = SDL_CreateThread(sendThreadFunc, "sendThread", this);
 }
 
 void NetScene::releaseThread() {
 	threadQuit = true;
-	//SDL_LASTERROR
 }

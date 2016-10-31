@@ -17,7 +17,8 @@ Room类主要保存了当前一场游戏的所以相关函数，选择作为父类主要是单机对战和网络对战
 
 ******************/
 
-#define SERVER_IP "127.0.0.1"
+//#define SERVER_IP "127.0.0.1"
+#define SERVER_IP "115.159.220.253"
 #define SERVER_PORT 9088
 
 

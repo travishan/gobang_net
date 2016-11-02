@@ -101,13 +101,13 @@ const uint16_t B = 0;
 const uint16_t W = 1;
 const uint16_t N = 2;
 
-typedef struct
+typedef struct B_POINT_Struct
 {
 	uint16_t row;
 	uint16_t col;
 }B_POINT;
 
-typedef struct VALUE_POINT
+typedef struct VALUE_POINT_Struct
 {
 	B_POINT pos;
 	int value;

@@ -3,7 +3,10 @@
 
 
 
-NetScene::NetScene() : prepareBtn(nullptr), restartBtn(nullptr), thread(nullptr), sendThread(nullptr), threadQuit(false), sendFlag(false){
+NetScene::NetScene() :
+	prepareBtn(nullptr), restartBtn(nullptr),
+	thread(nullptr), sendThread(nullptr),
+	threadQuit(false), sendFlag(false), ended(false) {
 	Connector::connect(SERVER_IP, SERVER_PORT);
 	Room::loadAll();
 	initButton();
@@ -86,7 +89,7 @@ void NetScene::endStateRender() {
 		winMgr->draw(300, 100, texture);
 		SDL_DestroyTexture(texture);
 	}
-	
+
 }
 
 /*
@@ -111,53 +114,6 @@ void NetScene::frame() {
 	}
 }
 
-/*
-解析GameMessage
-*/
-void NetScene::setGameMessage(const Game_Message &message) {
-	gameState = (GameState)message.gameState;
-	p1Index = message.p1Index;
-	p2Index = message.p2Index;
-	currentPlayer = message.curSide;
-	playerNum = message.playerNum;
-	lastTime = message.time;
-	winner = message.winner;
-
-	if (winner != 65535) {
-		restartBtn->setDisabled(false);
-	}
-}
-
-/*
-解析waitMessage
-*/
-void NetScene::setPlayerMessage(const Player_Message &message) {
-	myIndex = message.yourIndex;
-	int playerIndex = message.playerIndex;
-	Player *p = nullptr;
-	if (playerIndex == p1Index){
-		if (p1 == nullptr) {
-			p1 = make_shared<Player>(Player());
-		}
-		p = p1.get();
-	} else if(playerIndex == p2Index){
-		if (p2 == nullptr) {
-			p2 = make_shared<Player>(Player());
-		}
-		p = p2.get();
-	} else {
-		return;
-	}
-	p->setColor((CHESS_COLOR)message.color);
-	char name[16];
-	memcpy(name, message.name, 16);
-	p->setName(name);
-	p->setConnected((bool)message.connected);
-	p->setRegret((bool)message.regret);
-	p->setDisconnected((bool)message.disconnected);
-	p->setRoomIndex((uint16_t)message.roomIndx);
-	p->setPrepared((bool)message.prepared);
-}
 
 /*
 处理wait 的逻辑
@@ -172,7 +128,8 @@ void NetScene::waitState() {
 处理start 的逻辑
 */
 void NetScene::startState() {
-	
+	ended = false;
+	initBoard();
 }
 
 /*
@@ -189,7 +146,7 @@ void NetScene::runState() {
 处理end 的逻辑
 */
 void NetScene::endState() {
-	
+
 }
 
 
@@ -228,8 +185,9 @@ void NetScene::prepareCallback() {
 }
 
 void NetScene::restartCallback() {
-	client.sendData(nullptr, 0, FLAG_READY);
-	restartInit();
+	client.sendData(nullptr, 0, FLAG_RESTART);
+	//todo : 需要添加一个FLAG_RESTART
+	//Room::restartInit();
 	restartBtn->setDisabled(true);
 }
 
@@ -245,6 +203,56 @@ void NetScene::setAnotherPoint(B_POINT point) {
 	p->push_back(point);
 }
 
+
+/*
+解析GameMessage
+*/
+void NetScene::setGameMessage(const Game_Message &message) {
+	gameState = (GameState)message.gameState;
+	p1Index = message.p1Index;
+	p2Index = message.p2Index;
+	currentPlayer = message.curSide;
+	playerNum = message.playerNum;
+	lastTime = message.time;
+	winner = message.winner;
+
+	if (winner != 65535 && !ended) {
+		gameState = END;
+		restartBtn->setDisabled(false);
+		ended = true;
+	}
+}
+
+/*
+解析PlayerMessage
+*/
+void NetScene::setPlayerMessage(const Player_Message &message) {
+	myIndex = message.yourIndex;
+	int playerIndex = message.playerIndex;
+	Player *p = nullptr;
+	if (playerIndex == p1Index) {
+		if (p1 == nullptr) {
+			p1 = make_shared<Player>(Player());
+		}
+		p = p1.get();
+	} else if (playerIndex == p2Index) {
+		if (p2 == nullptr) {
+			p2 = make_shared<Player>(Player());
+		}
+		p = p2.get();
+	} else {
+		return;
+	}
+	p->setColor((CHESS_COLOR)message.color);
+	char name[16];
+	memcpy(name, message.name, 16);
+	p->setName(name);
+	p->setConnected((bool)message.connected);
+	p->setRegret((bool)message.regret);
+	p->setDisconnected((bool)message.disconnected);
+	p->setRoomIndex((uint16_t)message.roomIndx);
+	p->setPrepared((bool)message.prepared);
+}
 
 
 /*
@@ -275,7 +283,7 @@ int recvThreadFunc(void *data) {
 			Player_Message msg;
 			memcpy(&msg, recvData, length);
 			netScene->setPlayerMessage(msg);
-			if(recvData) delete recvData;
+			if (recvData) delete recvData;
 		}break;
 		case FLAG_PLAY_INFO:
 		{
@@ -284,7 +292,7 @@ int recvThreadFunc(void *data) {
 			netScene->setAnotherPoint(point);
 			if (recvData) delete recvData;
 		}
-			break;
+		break;
 		case FLAG_QUERY_REGRET:
 			break;
 		}

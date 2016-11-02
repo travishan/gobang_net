@@ -38,6 +38,8 @@ bool Room::addPlayer(const shared_ptr<Player> &player, uint16_t index) {
 
 void Room::initBoard() {
 	fillMatrix(chessBoard, N);
+	if (p1 != nullptr) p1->clear();
+	if (p2 != nullptr) p2->clear();
 }
 
 void Room::initAttribute() {
@@ -160,14 +162,9 @@ bool Room::checkMouseDown() {
 }
 
 /*
-重新开始  修改游戏状态为start，重新初始化棋盘，清空玩家棋子记录，交换玩家的颜色，设置黑棋方为先走。
+交换双方的颜色
 */
-void Room::restartInit() {
-	gameState = RUN;
-	initBoard();
-	p1->clear();
-	p2->clear();
-	winner = 65535;
+void Room::exchangeColor() {
 	auto p1Color = p1->getColor();
 	auto p2Color = p2->getColor();
 	p1->setColor(p2Color);
@@ -177,6 +174,16 @@ void Room::restartInit() {
 	} else {
 		currentPlayer = p2Index;
 	}
+}
+
+/*
+重新开始  修改游戏状态为start，重新初始化棋盘，清空玩家棋子记录，交换玩家的颜色，设置黑棋方为先走。
+*/
+void Room::restartInit() {
+	gameState = WAIT;
+	initBoard();
+	exchangeColor();
+	winner = 65535;
 }
 
 /*

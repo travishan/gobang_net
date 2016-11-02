@@ -70,6 +70,11 @@ protected:
 	void initBoard();
 
 	/*
+	交换双方的颜色
+	*/
+	void exchangeColor();
+
+	/*
 	初始化棋局相关属性
 	*/
 	void initAttribute();

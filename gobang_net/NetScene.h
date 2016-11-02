@@ -117,6 +117,11 @@ private:
 	void initThread();//初始化线程
 	void releaseThread();//释放线程变量
 
+	/*
+	结束变量，使不再重复接受结束信息
+	*/
+	bool ended;
+
 };
 
 
